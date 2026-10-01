@@ -930,12 +930,12 @@
     
     <nav class="header-nav">
       <button class="nav-btn active" onclick="showPanel('intro',this)">🏠 Inicio</button>
+      <button class="nav-btn" onclick="showPanel('respaldo360',this)">🔐 Respaldo 360</button>
       <button class="nav-btn" onclick="showPanel('bolso',this)">👜 Bolso Seguro Total</button>
       <button class="nav-btn purple-nav" onclick="showPanel('muvit',this)">✈️ Viajes MUVIT</button>
       <button class="nav-btn" onclick="showPanel('multisaldo',this)">💳 Respaldo tu Saldo</button>
       <button class="nav-btn" onclick="showPanel('siempre',this)">🛡️ Siempre Contigo</button>
       <button class="nav-btn" onclick="showPanel('tiquitos',this)">🎒 Tiquitos Estudiantil</button>
-      <button class="nav-btn" onclick="showPanel('respaldo360',this)">🔐 Respaldo 360</button>
     </nav>
   </div>
 </header>
@@ -958,35 +958,35 @@
   <div class="intro-products-section">
     <h2 class="intro-section-title">Selecciona un seguro</h2>
     <div class="intro-product-grid">
-      <button class="intro-product-card" onclick="showPanel('bolso', document.querySelectorAll('.nav-btn')[1])">
+      <button class="intro-product-card" onclick="showPanel('respaldo360', document.querySelectorAll('.nav-btn')[1])">
+        <span class="ipc-icon">🔐</span>
+        <span class="ipc-name">Respaldo 360</span>
+        <span class="ipc-desc">Protección ante fraude bancario, robo en cajero y reposición de documentos</span>
+      </button>
+      <button class="intro-product-card" onclick="showPanel('bolso', document.querySelectorAll('.nav-btn')[2])">
         <span class="ipc-icon">👜</span>
         <span class="ipc-name">Bolso Seguro Total</span>
         <span class="ipc-desc">Tranquilidad ante robos, asaltos y extravío de documentos y pertenencias</span>
       </button>
-      <button class="intro-product-card" onclick="showPanel('muvit', document.querySelectorAll('.nav-btn')[2])">
+      <button class="intro-product-card" onclick="showPanel('muvit', document.querySelectorAll('.nav-btn')[3])">
         <span class="ipc-icon">✈️</span>
         <span class="ipc-name">Viajes MUVIT</span>
         <span class="ipc-desc">Tranquilidad y seguridad en viajes al extranjero</span>
       </button>
-      <button class="intro-product-card" onclick="showPanel('multisaldo', document.querySelectorAll('.nav-btn')[3])">
+      <button class="intro-product-card" onclick="showPanel('multisaldo', document.querySelectorAll('.nav-btn')[4])">
         <span class="ipc-icon">💳</span>
         <span class="ipc-name">Respaldo tu Saldo</span>
         <span class="ipc-desc">Hasta 3 o 4 veces el saldo de su cuenta ante un accidente grave</span>
       </button>
-      <button class="intro-product-card" onclick="showPanel('siempre', document.querySelectorAll('.nav-btn')[4])">
+      <button class="intro-product-card" onclick="showPanel('siempre', document.querySelectorAll('.nav-btn')[5])">
         <span class="ipc-icon">🛡️</span>
         <span class="ipc-name">Siempre Contigo</span>
         <span class="ipc-desc">Protección ante accidentes en calle, transporte público o privado</span>
       </button>
-      <button class="intro-product-card" onclick="showPanel('tiquitos', document.querySelectorAll('.nav-btn')[5])">
+      <button class="intro-product-card" onclick="showPanel('tiquitos', document.querySelectorAll('.nav-btn')[6])">
         <span class="ipc-icon">🎒</span>
         <span class="ipc-name">Tiquitos Estudiantil</span>
         <span class="ipc-desc">Hijos o nietos estudiantes ante accidentes en la escuela o el camino</span>
-      </button>
-      <button class="intro-product-card" onclick="showPanel('respaldo360', document.querySelectorAll('.nav-btn')[6])">
-        <span class="ipc-icon">🔐</span>
-        <span class="ipc-name">Respaldo 360</span>
-        <span class="ipc-desc">Protección ante fraude bancario, robo en cajero y reposición de documentos</span>
       </button>
     </div>
   </div>
