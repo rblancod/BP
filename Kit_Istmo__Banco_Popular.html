@@ -275,6 +275,32 @@
   .tiquitos-section .info-box { background: #FDE5CC; border-color: #F47920; }
   .tiquitos-section .exclusion-item .exclusion-icon { color: #F47920; }
 
+  /* ── RESPALDO 360 ── */
+  .respaldo360 { background: linear-gradient(135deg, #1A4FA0 0%, #0A2463 55%, #061A4A 100%); }
+  .respaldo360-section .sub-btn:hover { border-color: #0A2463; color: #0A2463; background: #E8EEF9; }
+  .respaldo360-section .sub-btn.active { background: #0A2463; border-color: #0A2463; color: white; box-shadow: 0 3px 14px rgba(10,36,99,0.35); }
+  .respaldo360-section .content-card h3 .icon-dot { background: #0A2463; }
+  .respaldo360-section .coverage-item { background: #E8EEF9; border-left-color: #0A2463; }
+  .respaldo360-section .coverage-item strong { color: #0A2463; }
+  .respaldo360-section .plans-table th { background: #0A2463; }
+  .respaldo360-section .amount-highlight { color: #0A2463; }
+  .respaldo360-section .script-box { background: linear-gradient(135deg, #F0F4FC 0%, #E8EEF9 100%); border-color: #0A2463; }
+  .respaldo360-section .step-num { background: #0A2463; }
+  .respaldo360-section .quote-text { border-left-color: #0A2463; }
+  .respaldo360-section .objection-item:hover { border-color: #0A2463; }
+  .respaldo360-section .objection-a { background: #E8EEF9; border-top-color: rgba(10,36,99,0.15); }
+  .respaldo360-section .profile-card:hover { border-color: #0A2463; background: #E8EEF9; }
+  .respaldo360-section .moment-item { border-left-color: #0A2463; }
+  .respaldo360-section .moment-item:hover { background: #E8EEF9; }
+  .respaldo360-section .contact-box { background: linear-gradient(135deg, #F0F4FC 0%, #E8EEF9 100%); border-color: #0A2463; }
+  .respaldo360-section .contact-box-title { color: #0A2463; }
+  .respaldo360-section .contact-item .c-value { color: #0A2463; }
+  .respaldo360-section .why-card { background: linear-gradient(135deg, #F0F4FC 0%, #E8EEF9 100%); border: 2px solid rgba(10,36,99,0.2); }
+  .respaldo360-section .why-card h4 { color: #0A2463; }
+  .respaldo360-section .alert-box { background: #E8EEF9; border-color: #0A2463; }
+  .respaldo360-section .info-box { background: #E8EEF9; border-color: #0A2463; }
+  .respaldo360-section .exclusion-item .exclusion-icon { color: #0A2463; }
+
   /* card colors for intro */
   .blue-card { background: linear-gradient(135deg, #FAA61A 0%, #D88E0E 100%); }
   .green-card { background: linear-gradient(135deg, #70BF54 0%, #52A038 100%); }
@@ -909,6 +935,7 @@
       <button class="nav-btn" onclick="showPanel('multisaldo',this)">💳 Respaldo tu Saldo</button>
       <button class="nav-btn" onclick="showPanel('siempre',this)">🛡️ Siempre Contigo</button>
       <button class="nav-btn" onclick="showPanel('tiquitos',this)">🎒 Tiquitos Estudiantil</button>
+      <button class="nav-btn" onclick="showPanel('respaldo360',this)">🔐 Respaldo 360</button>
     </nav>
   </div>
 </header>
@@ -955,6 +982,11 @@
         <span class="ipc-icon">🎒</span>
         <span class="ipc-name">Tiquitos Estudiantil</span>
         <span class="ipc-desc">Hijos o nietos estudiantes ante accidentes en la escuela o el camino</span>
+      </button>
+      <button class="intro-product-card" onclick="showPanel('respaldo360', document.querySelectorAll('.nav-btn')[6])">
+        <span class="ipc-icon">🔐</span>
+        <span class="ipc-name">Respaldo 360</span>
+        <span class="ipc-desc">Protección ante fraude bancario, robo en cajero y reposición de documentos</span>
       </button>
     </div>
   </div>
@@ -2077,6 +2109,208 @@
     </div></div>
   </div>
 </div>
+<!-- RESPALDO 360 -->
+<div id="panel-respaldo360" class="panel respaldo360-section">
+  <div class="product-header respaldo360">
+    <div class="product-icon">🔐</div>
+    <div><h2>Respaldo 360</h2><p>Seguro Colectivo · Banco Popular · Protección ante fraude bancario, robo en cajero y reposición de documentos</p></div>
+  </div>
+  <div class="sub-nav">
+    <button class="sub-btn active" onclick="showSub('respaldo360','que-cubre',this)">✅ Qué Cubre</button>
+    <button class="sub-btn" onclick="showSub('respaldo360','planes',this)">💰 Planes</button>
+    <button class="sub-btn" onclick="showSub('respaldo360','gestionar',this)">🚀 Gestionar Activación</button>
+    <button class="sub-btn" onclick="showSub('respaldo360','apoyo',this)">📚 Apoyo Extra</button>
+  </div>
+
+  <div id="respaldo360-que-cubre" class="content-panel active">
+    <div class="content-card product-intro-card">
+      <h3><span class="icon-dot"></span>🔐 Respaldo 360</h3>
+      <p class="product-intro-text">Protege al asegurado ante el fraude bancario, el robo en cajero automático o secuestro express y la reposición de documentos personales. Incluye servicio de asistencia con orientación legal y psicológica. Cobertura dentro y fuera del territorio nacional, disponible en 5 planes en colones.</p>
+    </div>
+
+    <div class="content-card">
+      <h3><span class="icon-dot"></span>Cobertura contra Fraude Bancario</h3>
+      <p>Ampara al asegurado ante acciones ilegales en las que terceros obtienen dinero, bienes o servicios mediante engaño o manipulación sobre sus <strong>tarjetas de crédito o débito y sus tarjetas adicionales</strong>.</p>
+      <div class="alert-box">⚡ <div>Se amparan únicamente las compras o transacciones ilegítimas realizadas durante los <strong>30 días hábiles anteriores</strong> al aviso del asegurado. <strong>Eventos: 2 al año</strong> durante la vigencia, dentro y fuera del territorio nacional.</div></div>
+      <div class="coverage-grid">
+        <div class="coverage-item"><strong>💳 Clonación de Tarjeta</strong><p>Reproducción ilícita de la tarjeta por terceros, sin que el asegurado pierda la posesión de la misma.</p></div>
+        <div class="coverage-item"><strong>🌐 Compra Fraudulenta por Internet</strong><p>Uso de la información de la tarjeta, sin autorización, para realizar compras vía internet.</p></div>
+        <div class="coverage-item"><strong>🎭 Ingeniería Social</strong><p>Acceso a información bancaria confidencial mediante publicidad, correos o formularios que aparentan ser seguros.</p></div>
+        <div class="coverage-item"><strong>📞 Llamada Tripartita</strong><p>Un tercero simula ser de una entidad confiable y conecta la llamada con otro supuesto miembro para engañar al asegurado.</p></div>
+        <div class="coverage-item"><strong>🎣 Phishing</strong><p>Correos, sitios web falsos o mensajes que aparentan ser de fuentes legítimas para obtener información bancaria confidencial.</p></div>
+        <div class="coverage-item"><strong>🪪 Robo de Identidad</strong><p>Uso de información bancaria obtenida de forma irregular para pagos, créditos o transferencias a terceros.</p></div>
+        <div class="coverage-item"><strong>🚫 Uso No Autorizado de la Tarjeta</strong><p>Transacciones realizadas con la tarjeta del asegurado sin su autorización.</p></div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h3><span class="icon-dot"></span>Robo en Cajero Automático o Secuestro Express</h3>
+      <p>Cubre el robo del dinero retirado cuando terceros colocan al asegurado en estado de indefensión, o lo fuerzan a entregar la tarjeta de crédito o débito y su clave para retirar el dinero del cajero.</p>
+      <div class="coverage-grid">
+        <div class="coverage-item"><strong>⏱️ Dentro de 2 horas</strong><p>El robo debe darse dentro de las dos (2) horas siguientes de haber retirado el dinero del cajero automático.</p></div>
+        <div class="coverage-item"><strong>🔁 Eventos</strong><p>2 al año durante la vigencia.</p></div>
+        <div class="coverage-item"><strong>🌎 Alcance</strong><p>Dentro y fuera del territorio nacional.</p></div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h3><span class="icon-dot"></span>Reposición de Documentos Personales</h3>
+      <p>Cubre los gastos relacionados con la reposición de los documentos personales del asegurado en caso de hurto, robo o extravío.</p>
+      <div class="coverage-grid">
+        <div class="coverage-item"><strong>🔁 Eventos</strong><p>2 al año durante la vigencia.</p></div>
+        <div class="coverage-item"><strong>🌎 Alcance</strong><p>Dentro y fuera del territorio nacional.</p></div>
+        <div class="coverage-item"><strong>💵 Límite</strong><p>Hasta ₡62.000 según el plan contratado.</p></div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h3><span class="icon-dot"></span>Servicio de Asistencia Respaldo 360</h3>
+      <div class="coverage-grid">
+        <div class="coverage-item"><strong>⚖️ Orientación Legal (Abogado)</strong><p>Orientación telefónica ilimitada. Además, 1 cita al año de 1 hora para asesorar sobre las alternativas derivadas del hecho delictivo. Horario hábil L-V de 10:00 a.m. a 5:00 p.m.</p></div>
+        <div class="coverage-item"><strong>🧠 Orientación Psicológica</strong><p>Orientación telefónica ilimitada con un psicólogo.</p></div>
+        <div class="coverage-item"><strong>🚗 Transporte para Denuncia</strong><p>Coordinación de un transporte que traslade al asegurado hasta la autoridad competente para interponer la denuncia judicial. 1 al año, máximo 40 Km.</p></div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h3><span class="icon-dot"></span>Requisitos de Elegibilidad y Reclamo</h3>
+      <div class="coverage-grid">
+        <div class="coverage-item"><strong>Para asegurarse</strong><p>Ser cliente Banco Popular · Tarjeta de crédito o débito vigente, o cuenta activa · 18 años en adelante.</p></div>
+        <div class="coverage-item"><strong>Medio de pago</strong><p>Cobro mensual directo a la tarjeta o cuenta bancaria.</p></div>
+        <div class="coverage-item"><strong>Documentos de reclamo</strong><p>Formulario de reclamación firmado, documento de identidad, carta con el detalle de los hechos, denuncia judicial ante el O.I.J., carta de la entidad financiera, comprobantes y estados de cuenta de las transacciones.</p></div>
+      </div>
+      <div class="contact-box" style="margin-top:20px;">
+        <div class="contact-box-title">📞 Contacto Respaldo 360</div>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="c-label">Números de Atención</div>
+            <div class="c-value">4404-4318</div>
+            <div class="c-sub">Reclamos y servicio de asistencia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="respaldo360-planes" class="content-panel">
+    <div class="content-card">
+      <h3><span class="icon-dot"></span>Planes y Primas en Colones</h3>
+      <div style="overflow-x:auto">
+      <table class="plans-table">
+        <thead><tr><th>Cobertura</th><th>Plan 1</th><th>Plan 2</th><th>Plan 3</th><th>Plan 4</th><th>Plan 5</th></tr></thead>
+        <tbody>
+          <tr><td>Robo/Pérdida de Tarjetas<br><span style="font-size:11px;color:#666;">Clonación · Compras por Internet · Ingeniería Social</span></td><td class="amount-highlight">₡930.000</td><td class="amount-highlight">₡1.860.000</td><td class="amount-highlight">₡3.720.000</td><td class="amount-highlight">₡6.200.000</td><td class="amount-highlight">₡310.000</td></tr>
+          <tr><td>Robo en Cajero (ATM)</td><td>₡310.000</td><td>₡620.000</td><td>₡1.240.000</td><td>₡1.860.000</td><td>₡155.000</td></tr>
+          <tr><td>Reposición de Documentos</td><td>₡62.000</td><td>₡62.000</td><td>₡62.000</td><td>₡62.000</td><td>₡62.000</td></tr>
+          <tr><td>Asistencia Respaldo 360</td><td>✅ Sí</td><td>✅ Sí</td><td>✅ Sí</td><td>✅ Sí</td><td>✅ Sí</td></tr>
+          <tr><td><strong>Prima Mensual</strong></td><td class="amount-highlight">₡3.750</td><td class="amount-highlight">₡4.800</td><td class="amount-highlight">₡6.240</td><td class="amount-highlight">₡7.710</td><td class="amount-highlight">₡2.900</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="info-box" style="margin-top:16px;">ℹ️ <div>Los montos corresponden al límite máximo de cobertura por tipo de evento. Prima de cobro mensual a tarjeta o cuenta. Cobertura dentro y fuera del territorio nacional.</div></div>
+    </div>
+  </div>
+
+  <div id="respaldo360-gestionar" class="content-panel">
+    <div class="content-card">
+    <h3>🚀 Acciones de Venta</h3>
+    <div class="action-btns">
+      <a href="https://s2plus.online/private" target="_blank" class="action-btn btn-primary" style="background:#0A2463;">
+        <span class="btn-icon">🔗</span>
+        <div>Ingresar Venta S2+<span class="btn-info">Ingresar con correo institucional</span></div>
+      </a>
+    </div>
+  </div>
+  </div>
+
+  <div id="respaldo360-apoyo" class="content-panel">
+    <details class="collapsible-card" open>
+    <summary class="collapsible-summary"><h3><span class="icon-dot"></span>Guión de Venta — Respaldo 360</h3><span class="collapse-chevron">▼</span></summary>
+    <div class="collapsible-body"><div class="script-box">
+        <div class="script-step"><div class="step-num">1</div><div class="step-content"><strong>Apertura — Conexión</strong><p>Inicia con una pregunta que genere conciencia del riesgo digital.</p><div class="quote-text">"Don/Doña [nombre], ¿sabía que el fraude con tarjetas y las estafas digitales son hoy uno de los delitos que más crecen en el país? ¿Tiene protegida su tarjeta ante una clonación o un phishing?"</div></div></div>
+        <div class="script-step"><div class="step-num">2</div><div class="step-content"><strong>Presentación del producto</strong><p>Explica la protección integral de forma simple.</p><div class="quote-text">"Tenemos Respaldo 360. Lo protege ante fraude bancario —clonación, compras por internet, phishing, robo de identidad—, ante robo en cajero o secuestro express, y le cubre la reposición de documentos. Además incluye asistencia legal y psicológica. Desde ₡2.900 al mes."</div></div></div>
+        <div class="script-step"><div class="step-num">3</div><div class="step-content"><strong>Ejemplo concreto</strong><p>Aterriza el beneficio con un caso real.</p><div class="quote-text">"Imagínese que le clonan la tarjeta y le hacen compras por internet. Con Respaldo 360 recupera hasta ₡6.200.000 en el Plan 4, y un abogado lo acompaña para interponer la denuncia. Todo sin tener que asumir solo esa pérdida."</div></div></div>
+        <div class="script-step"><div class="step-num">4</div><div class="step-content"><strong>Cierre — Pregunta de compromiso</strong><p>Asume el sí y facilita la activación.</p><div class="quote-text">"¿Le gustaría activarlo hoy? Solo necesito su tarjeta o cuenta y queda protegido de inmediato, dentro y fuera del país. ¿Empezamos con el Plan 1 o prefiere mayor cobertura?"</div></div></div>
+        <div class="script-step"><div class="step-num">5</div><div class="step-content"><strong>Cierre con urgencia real</strong><p>Si el asegurado duda, refuerza con la realidad del riesgo.</p><div class="quote-text">"El fraude no avisa y ocurre en segundos. Por menos de ₡100 al día usted deja respaldada su tarjeta y su identidad. ¿Lo dejamos activo desde ahora?"</div></div></div>
+      </div></div>
+  </details>
+    <details class="collapsible-card" open>
+    <summary class="collapsible-summary"><h3><span class="icon-dot"></span>Objeciones Frecuentes y Cómo Manejarlas</h3><span class="collapse-chevron">▼</span></summary>
+    <div class="collapsible-body"><div class="objection-item"><div class="objection-q">💬 "El banco ya me devuelve el dinero si me clonan."</div><div class="objection-a">No siempre, y los procesos pueden tardar o no reconocer el 100%. Respaldo 360 le da una <strong>cobertura propia y clara</strong> por evento, más asistencia legal para acompañarlo en el reclamo y la denuncia.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "Yo tengo cuidado, no caigo en esas estafas."</div><div class="objection-a">La mayoría de las víctimas también lo creían. El phishing, la ingeniería social y la clonación son cada vez más sofisticados. Es una <strong>red de seguridad</strong> por si alguna vez ocurre, dentro y fuera del país.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "¿Me cubre si me asaltan en el cajero?"</div><div class="objection-a">Sí. La cobertura de robo en cajero o secuestro express aplica cuando lo colocan en indefensión o lo fuerzan a entregar su tarjeta y clave, <strong>dentro de las 2 horas</strong> siguientes al retiro.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "El precio me parece un gasto extra."</div><div class="objection-a">Desde ₡2.900 al mes —menos de ₡100 al día— protege su dinero, su identidad y sus documentos, y suma asistencia legal y psicológica. Una sola pérdida por fraude cuesta muchísimo más.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "Lo voy a pensar."</div><div class="objection-a">Claro, es su decisión. La activación toma minutos y puede cancelarse cuando quiera. Lo que no se puede hacer es <strong>contratarlo después del fraude</strong>. ¿Lo dejamos activo hoy para que ya quede protegido?</div></div></div>
+  </details>
+  </div>
+
+  <!-- Hidden data for Zona Asesor modal -->
+  <div class="asesor-data" data-product="respaldo360" style="display:none;">
+  <div class="asesor-tab-content" data-asesor-tab="por-que"><div class="content-card">
+      <h3><span class="icon-dot"></span>Por qué Promover Respaldo 360</h3>
+      <div class="why-grid">
+        <div class="why-card">
+          <h4>🎯 Por qué es fundamental hablarlo</h4>
+          <p>El fraude bancario y las estafas digitales están entre los delitos que más crecen. Casi todos los clientes usan tarjetas y banca digital, por lo que el riesgo es transversal. Ofrecer Respaldo 360 aborda una preocupación real y creciente con una solución concreta e inmediata.</p>
+        </div>
+        <div class="why-card">
+          <h4>💎 Por qué el asegurado debe adquirirlo</h4>
+          <p>Es una protección <strong>integral</strong>: cubre siete modalidades de fraude, robo en cajero o secuestro express y reposición de documentos, dentro y fuera del país. Suma asistencia legal y psicológica. Desde <strong>₡2.900 al mes</strong> con cobertura inmediata.</p>
+        </div>
+      </div>
+    </div></div>
+  <div class="asesor-tab-content" data-asesor-tab="perfiles"><div class="content-card">
+      <h3><span class="icon-dot"></span>Perfiles Prioritarios para Oferta</h3>
+      <div class="profiles-grid">
+        <div class="profile-card"><div class="profile-icon">💳</div><strong>Usuario frecuente de tarjeta</strong><p>Compra en comercios y cajeros a diario; alta exposición a clonación y uso no autorizado.</p></div>
+        <div class="profile-card"><div class="profile-icon">🛒</div><strong>Comprador en línea</strong><p>Realiza compras por internet con frecuencia; valora la cobertura de compra fraudulenta.</p></div>
+        <div class="profile-card"><div class="profile-icon">📱</div><strong>Usuario de banca digital</strong><p>Opera desde el celular; expuesto a phishing e ingeniería social.</p></div>
+        <div class="profile-card"><div class="profile-icon">🧳</div><strong>Viajero</strong><p>Usa su tarjeta fuera del país; aprovecha la cobertura internacional.</p></div>
+        <div class="profile-card"><div class="profile-icon">👵</div><strong>Adulto mayor</strong><p>Objetivo frecuente de llamadas tripartitas y estafas telefónicas.</p></div>
+        <div class="profile-card"><div class="profile-icon">🏧</div><strong>Quien retira efectivo a menudo</strong><p>Expuesto a robo en cajero y secuestro express.</p></div>
+      </div>
+    </div></div>
+  <div class="asesor-tab-content" data-asesor-tab="momentos"><div class="content-card">
+      <h3><span class="icon-dot"></span>Momentos Clave para Ofrecer el Seguro</h3>
+      <div class="moment-item"><div class="moment-icon">💳</div><div class="moment-text"><strong>Al emitir o renovar una tarjeta</strong><p>Momento natural para proteger el nuevo medio de pago ante fraude.</p></div></div>
+      <div class="moment-item"><div class="moment-icon">📰</div><div class="moment-text"><strong>Cuando menciona una estafa reciente</strong><p>La conversación ya está abierta. Empatiza y presenta la protección integral como solución.</p></div></div>
+      <div class="moment-item"><div class="moment-icon">🛒</div><div class="moment-text"><strong>Si comenta que compra por internet</strong><p>Destaca la cobertura de compra fraudulenta y robo de identidad.</p></div></div>
+      <div class="moment-item"><div class="moment-icon">🧳</div><div class="moment-text"><strong>Antes de un viaje</strong><p>Resalta la cobertura dentro y fuera del territorio nacional.</p></div></div>
+      <div class="moment-item"><div class="moment-icon">🏧</div><div class="moment-text"><strong>Cuando usa cajeros con frecuencia</strong><p>Presenta la cobertura de robo en cajero y secuestro express.</p></div></div>
+      <div class="moment-item"><div class="moment-icon">🤝</div><div class="moment-text"><strong>En cualquier gestión presencial en sucursal</strong><p>Cada visita es una oportunidad para abrir la conversación de forma natural.</p></div></div>
+    </div></div>
+  <div class="asesor-tab-content" data-asesor-tab="guion"><div class="content-card">
+      <h3><span class="icon-dot"></span>Guión de Venta — Respaldo 360</h3>
+      <div class="script-box">
+        <div class="script-step"><div class="step-num">1</div><div class="step-content"><strong>Apertura — Conexión</strong><p>Inicia con una pregunta que genere conciencia del riesgo digital.</p><div class="quote-text">"Don/Doña [nombre], ¿sabía que el fraude con tarjetas y las estafas digitales son hoy uno de los delitos que más crecen en el país? ¿Tiene protegida su tarjeta ante una clonación o un phishing?"</div></div></div>
+        <div class="script-step"><div class="step-num">2</div><div class="step-content"><strong>Presentación del producto</strong><p>Explica la protección integral de forma simple.</p><div class="quote-text">"Tenemos Respaldo 360. Lo protege ante fraude bancario, robo en cajero o secuestro express, y le cubre la reposición de documentos. Además incluye asistencia legal y psicológica. Desde ₡2.900 al mes."</div></div></div>
+        <div class="script-step"><div class="step-num">3</div><div class="step-content"><strong>Ejemplo concreto</strong><p>Aterriza el beneficio con un caso real.</p><div class="quote-text">"Si le clonan la tarjeta y le hacen compras por internet, con Respaldo 360 recupera hasta ₡6.200.000 en el Plan 4, y un abogado lo acompaña para interponer la denuncia."</div></div></div>
+        <div class="script-step"><div class="step-num">4</div><div class="step-content"><strong>Cierre — Pregunta de compromiso</strong><p>Asume el sí y facilita la activación.</p><div class="quote-text">"¿Le gustaría activarlo hoy? Solo necesito su tarjeta o cuenta y queda protegido de inmediato. ¿Empezamos con el Plan 1 o prefiere mayor cobertura?"</div></div></div>
+        <div class="script-step"><div class="step-num">5</div><div class="step-content"><strong>Cierre con urgencia real</strong><p>Si el asegurado duda, refuerza con la realidad del riesgo.</p><div class="quote-text">"El fraude no avisa y ocurre en segundos. Por menos de ₡100 al día deja respaldada su tarjeta y su identidad. ¿Lo dejamos activo desde ahora?"</div></div></div>
+      </div>
+    </div></div>
+  <div class="asesor-tab-content" data-asesor-tab="objeciones"><div class="content-card">
+      <h3><span class="icon-dot"></span>Objeciones Frecuentes y Cómo Manejarlas</h3>
+      <div class="objection-item"><div class="objection-q">💬 "El banco ya me devuelve el dinero si me clonan."</div><div class="objection-a">No siempre, y los procesos pueden tardar o no reconocer el 100%. Respaldo 360 le da una <strong>cobertura propia y clara</strong> por evento, más asistencia legal.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "Yo tengo cuidado, no caigo en esas estafas."</div><div class="objection-a">La mayoría de las víctimas también lo creían. El phishing y la clonación son cada vez más sofisticados. Es una <strong>red de seguridad</strong> por si alguna vez ocurre.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "¿Me cubre si me asaltan en el cajero?"</div><div class="objection-a">Sí, la cobertura de robo en cajero o secuestro express aplica <strong>dentro de las 2 horas</strong> siguientes al retiro, cuando lo colocan en indefensión.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "El precio me parece un gasto extra."</div><div class="objection-a">Desde ₡2.900 al mes protege su dinero, su identidad y sus documentos, y suma asistencia legal y psicológica. Un solo fraude cuesta mucho más.</div></div>
+      <div class="objection-item"><div class="objection-q">💬 "Lo voy a pensar."</div><div class="objection-a">Claro, es su decisión. La activación toma minutos. Lo que no se puede hacer es <strong>contratarlo después del fraude</strong>. ¿Lo dejamos activo hoy?</div></div>
+    </div></div>
+  <div class="asesor-tab-content" data-asesor-tab="exclusiones"><div class="content-card">
+      <h3><span class="icon-dot"></span>Exclusiones de la Póliza — Respaldo 360</h3>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Dolo o culpa del asegurado:</strong> Hurto y daños consecuenciales como daño moral, lucro cesante, pérdida de beneficios o interrupción de negocio.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Tarjeta portada por conocidos:</strong> Robo de la tarjeta cuando sea portada por un familiar, amigo o empleado, con o sin autorización.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Incumplimiento de pago:</strong> Impago total o parcial de cuotas u obligaciones del asegurado y los intereses que esto genere.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Transferencias a terceros:</strong> Transferencias efectuadas por el asegurado a terceros que se hagan pasar por familiares o conocidos.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Fraude desde IP propia:</strong> Fraudes por internet desde una dirección IP asociada al asegurado o a la empresa en la que trabaja.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Fallas del sistema:</strong> Operaciones erróneas o mal funcionamiento del sistema de la entidad financiera o comercios digitales, o ataques directos a sus plataformas.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Ya indemnizado:</strong> Pérdidas amparables por esta póliza que hayan sido indemnizadas por cualquier otro seguro.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Confiscación o bloqueo:</strong> Pérdidas atribuibles o posteriores a la confiscación, destrucción, bloqueo o embargo de la tarjeta.</div></div>
+      <div class="exclusion-item"><span class="exclusion-icon">✖</span><div><strong>Reporte tardío:</strong> Fraudes reportados después de cinco (5) días hábiles desde la recepción del estado de cuenta correspondiente.</div></div>
+    </div></div>
+  </div>
+</div>
 </main>
 
 
@@ -2128,7 +2362,8 @@ document.addEventListener('click', function(e) {
     'muvit': '✈️ Viajes MUVIT',
     'multisaldo': '💳 Respaldo tu Saldo',
     'siempre': '🛡️ AP Siempre Contigo',
-    'tiquitos': '🎒 Estudiantil Tiquitos'
+    'tiquitos': '🎒 Estudiantil Tiquitos',
+    'respaldo360': '🔐 Respaldo 360'
   };
   function openAsesor() {
     const pid = getCurrentProduct();
