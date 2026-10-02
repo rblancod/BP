@@ -126,6 +126,7 @@ tfoot td{padding:12px 10px;background:#FAF7FC;font-weight:800;border-top:2px sol
 .pcard.c2{border-top-color:var(--verde)}
 .pcard.c3{border-top-color:var(--amarillo)}
 .pcard.c4{border-top-color:#0A2463}
+.pcard.c5{border-top-color:#F47920}
 .pcard .n{font-weight:800;font-size:.9rem;color:var(--card-txt);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .pcard .n span.q{font-size:.66rem;background:#F4F4F4;color:var(--gris);padding:3px 8px;border-radius:999px;white-space:nowrap;font-weight:700}
 .pline{display:flex;justify-content:space-between;font-size:.79rem;padding:3px 0;color:var(--card-muted)}
@@ -185,7 +186,7 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
 <section class="panel on" id="reg">
   <div class="kpis">
     <div class="kpi"><div class="lbl">Pólizas registradas</div><div class="val" id="k-tot">0</div><div class="foot" id="k-mix">0 en colones · 0 MUVIT</div></div>
-    <div class="kpi"><div class="lbl">Prima acumulada (₡)</div><div class="val" id="k-fac">₡0</div><div class="foot">Bolso · Respaldo · Siempre · Respaldo 360</div></div>
+    <div class="kpi"><div class="lbl">Prima acumulada (₡)</div><div class="val" id="k-fac">₡0</div><div class="foot">Bolso · Respaldo · Siempre · Tiquitos</div></div>
     <div class="kpi nar"><div class="lbl">% de incentivo alcanzado</div><div class="val" id="k-pct">0%</div><div class="foot" id="k-falta">Necesita superar ₡6,000 de prima</div></div>
     <div class="kpi ama"><div class="lbl">Compensación total</div><div class="val" id="k-inc">₡0</div><div class="foot">Coberturas ₡ + MUVIT 5%</div></div>
   </div>
@@ -243,7 +244,7 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
 <section class="panel" id="tot">
   <div class="kpis">
     <div class="kpi mor"><div class="lbl">Prima acumulada (₡)</div><div class="val" id="t-fac">₡0</div><div class="foot" id="t-pct">0% alcanzado</div></div>
-    <div class="kpi nar"><div class="lbl">Incentivo coberturas ₡</div><div class="val" id="t-col">₡0</div><div class="foot">Bolso · Respaldo · Siempre · Respaldo 360</div></div>
+    <div class="kpi nar"><div class="lbl">Incentivo coberturas ₡</div><div class="val" id="t-col">₡0</div><div class="foot">Bolso · Respaldo · Siempre · Tiquitos</div></div>
     <div class="kpi ver"><div class="lbl">Incentivo Viajes MUVIT</div><div class="val" id="t-muv">₡0</div><div class="foot" id="t-muvusd">5% de $0.00</div></div>
     <div class="kpi"><div class="lbl">Pólizas totales del mes</div><div class="val" id="t-pol">0</div><div class="foot">Todas las coberturas</div></div>
   </div>
@@ -281,6 +282,7 @@ const PRODUCTOS = {
   RESPALDO: {nom:'Respaldo tu Saldo',  ico:'💳', mon:'CRC', pct:.5,  cls:'c1'},
   SIEMPRE:  {nom:'Siempre Contigo',    ico:'🛡️', mon:'CRC', pct:.5,  cls:'c2'},
   RESPALDO360: {nom:'Respaldo 360',    ico:'🔐', mon:'CRC', fijo:1500, cls:'c4'},
+  TIQUITOS: {nom:'Tiquitos Estudiantil', ico:'🎒', mon:'CRC', pct:.5,  cls:'c5'},
   MUVIT:    {nom:'Viajes MUVIT',       ico:'✈️', mon:'USD', pct:.05, cls:'c3'}
 };
 
@@ -323,6 +325,23 @@ const PLANES = {
     {id:'R3602', lbl:'Plan 2 — ₡4,800', p:4800},
     {id:'R3603', lbl:'Plan 3 — ₡6,240', p:6240},
     {id:'R3604', lbl:'Plan 4 — ₡7,710', p:7710}
+  ],
+  TIQUITOS: [
+    {id:'T1A', lbl:'Plan 1 · 2-64 — ₡758/mes',    p:758},
+    {id:'T2A', lbl:'Plan 2 · 2-64 — ₡850/mes',    p:850},
+    {id:'T3A', lbl:'Plan 3 · 2-64 — ₡958/mes',    p:958},
+    {id:'T4A', lbl:'Plan 4 · 2-64 — ₡1,125/mes',  p:1125},
+    {id:'T5A', lbl:'Plan 5 · 2-64 — ₡1,375/mes',  p:1375},
+    {id:'T1B', lbl:'Plan 1 · 65-74 — ₡3,033/mes', p:3033},
+    {id:'T2B', lbl:'Plan 2 · 65-74 — ₡3,400/mes', p:3400},
+    {id:'T3B', lbl:'Plan 3 · 65-74 — ₡3,833/mes', p:3833},
+    {id:'T4B', lbl:'Plan 4 · 65-74 — ₡4,500/mes', p:4500},
+    {id:'T5B', lbl:'Plan 5 · 65-74 — ₡5,500/mes', p:5500},
+    {id:'T1C', lbl:'Plan 1 · 75+ — ₡6,825/mes',   p:6825},
+    {id:'T2C', lbl:'Plan 2 · 75+ — ₡7,650/mes',   p:7650},
+    {id:'T3C', lbl:'Plan 3 · 75+ — ₡8,625/mes',   p:8625},
+    {id:'T4C', lbl:'Plan 4 · 75+ — ₡10,125/mes',  p:10125},
+    {id:'T5C', lbl:'Plan 5 · 75+ — ₡12,375/mes',  p:12375}
   ]
 };
 
@@ -622,6 +641,7 @@ function recalc(){
     ['👜 Bolso Seguro Total', sumaP('BOLSO')    ? money(sumaP('BOLSO'))    + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('BOLSO')    * pct],
     ['💳 Respaldo tu Saldo',  sumaP('RESPALDO') ? money(sumaP('RESPALDO')) + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('RESPALDO') * pct],
     ['🛡️ Siempre Contigo',    sumaP('SIEMPRE')  ? money(sumaP('SIEMPRE'))  + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('SIEMPRE')  * pct],
+    ['🎒 Tiquitos Estudiantil', sumaP('TIQUITOS') ? money(sumaP('TIQUITOS')) + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('TIQUITOS') * pct],
     ['🔐 Respaldo 360',       cntP('RESPALDO360') ? cntP('RESPALDO360') + ' activación(es) × ' + money(PRODUCTOS.RESPALDO360.fijo) : 'Sin ventas', cntP('RESPALDO360') * PRODUCTOS.RESPALDO360.fijo],
     ['✈️ Viajes MUVIT',       usdBase ? usd(usdBase) + ' × 5% · TC BCCR por fecha' : 'Sin ventas', incMuv]
   ].map(([k,b,m]) => `<tr>
@@ -667,7 +687,7 @@ function exportXLS(){
     {Concepto:'ASESOR', Base:'', Monto:el('asNombre').value || '—'},
     {Concepto:'OFICINA', Base:'', Monto:el('asOficina').value || '—'},
     {Concepto:'PERIODO', Base:'', Monto:periodoTxt()},
-    {Concepto:'Prima acumulada en colones', Base:'Bolso + Respaldo + Siempre Contigo', Monto:Math.round(base)},
+    {Concepto:'Prima acumulada en colones', Base:"Bolso + Respaldo + Siempre + Tiquitos", Monto:Math.round(base)},
     {Concepto:'% de incentivo alcanzado', Base:'sobre la prima acumulada', Monto:(pct*100)+'%'},
     {Concepto:'Incentivo coberturas en colones', Base:money(base) + ' x ' + (pct*100) + '%', Monto:Math.round(incCol)},
     {Concepto:'Incentivo Respaldo 360', Base:money(PRODUCTOS.RESPALDO360.fijo) + ' por activación', Monto:Math.round(incFijo)},
