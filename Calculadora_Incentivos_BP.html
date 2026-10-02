@@ -280,7 +280,7 @@ const PRODUCTOS = {
   BOLSO:    {nom:'Bolso Seguro Total', ico:'👜', mon:'CRC', pct:.5,  cls:'c0'},
   RESPALDO: {nom:'Respaldo tu Saldo',  ico:'💳', mon:'CRC', pct:.5,  cls:'c1'},
   SIEMPRE:  {nom:'Siempre Contigo',    ico:'🛡️', mon:'CRC', pct:.5,  cls:'c2'},
-  RESPALDO360: {nom:'Respaldo 360',    ico:'🔐', mon:'CRC', pct:.5,  cls:'c4'},
+  RESPALDO360: {nom:'Respaldo 360',    ico:'🔐', mon:'CRC', fijo:1500, cls:'c4'},
   MUVIT:    {nom:'Viajes MUVIT',       ico:'✈️', mon:'USD', pct:.05, cls:'c3'}
 };
 
@@ -341,6 +341,7 @@ const usd   = n => '$' + (Number(n)||0).toLocaleString('en-US',{minimumFractionD
 const periodoTxt = () => MESES[+el('mes').value] + ' ' + el('anio').value;
 const pctFor = t => (ESCALA.find(e => t >= e.min && t <= e.max) || ESCALA[0]).pct;
 const esUSD  = p => PRODUCTOS[p] && PRODUCTOS[p].mon === 'USD';
+const esFijo = p => PRODUCTOS[p] && PRODUCTOS[p].fijo > 0;
 const hoyISO = () => new Date().toISOString().slice(0,10);
 
 /* ========== TIPO DE CAMBIO BCCR (por fecha, con caché) ========== */
@@ -427,16 +428,21 @@ function load(){
 }
 
 /* ================= LÓGICA ================= */
-/* Cada fila: base = prima en colones que suma a la escala (solo CRC).
-   MUVIT: incentivo propio = prima US$ × 5% × TC de la fecha. */
+/* Cada fila: base = prima en colones que suma a la escala (solo CRC con %).
+   MUVIT: incentivo propio = prima US$ × 5% × TC de la fecha.
+   Productos con monto fijo (p.ej. Respaldo 360): pagan un monto fijo por
+   activación, no entran en la escala de prima acumulada. */
 function evalRow(r){
   const prima = Number(r.prima) || 0;
-  if(!r.prod || !prima) return {vacia:true, base:0, tc:0, primaCRC:0, incMuv:0, usd:0};
+  if(!r.prod || !prima) return {vacia:true, base:0, tc:0, primaCRC:0, incMuv:0, incFijo:0, usd:0};
   if(esUSD(r.prod)){
     const tc = Number(r.tc) || tcPara(r.fecha);
-    return {vacia:false, base:0, tc, primaCRC:prima*tc, incMuv:prima*PRODUCTOS.MUVIT.pct*tc, usd:prima};
+    return {vacia:false, base:0, tc, primaCRC:prima*tc, incMuv:prima*PRODUCTOS.MUVIT.pct*tc, incFijo:0, usd:prima};
   }
-  return {vacia:false, base:prima, tc:0, primaCRC:prima, incMuv:0, usd:0};
+  if(esFijo(r.prod)){
+    return {vacia:false, base:0, tc:0, primaCRC:prima, incMuv:0, incFijo:PRODUCTOS[r.prod].fijo, usd:0};
+  }
+  return {vacia:false, base:prima, tc:0, primaCRC:prima, incMuv:0, incFijo:0, usd:0};
 }
 
 /* ================= FILAS ================= */
@@ -546,14 +552,15 @@ function recalc(){
   const pct   = pctFor(base);
   const incCol = base * pct;
   const incMuv = evals.reduce((s,e) => s + e.incMuv, 0);
+  const incFijo= evals.reduce((s,e) => s + e.incFijo, 0);
   const usdBase= evals.reduce((s,e) => s + e.usd, 0);
-  const gran   = incCol + incMuv;
+  const gran   = incCol + incMuv + incFijo;
 
   rows.forEach((r,i) => {
     const e = evals[i];
-    const inc = esUSD(r.prod) ? e.incMuv : e.base * pct;
+    const inc = esUSD(r.prod) ? e.incMuv : (esFijo(r.prod) ? e.incFijo : e.base * pct);
     el('crc-' + r.id).textContent = e.vacia ? '—' : money(e.primaCRC);
-    el('pct-' + r.id).textContent = e.vacia ? '—' : (esUSD(r.prod) ? '5%' : (pct*100) + '%');
+    el('pct-' + r.id).textContent = e.vacia ? '—' : (esUSD(r.prod) ? '5%' : (esFijo(r.prod) ? 'Fijo' : (pct*100) + '%'));
     const i$ = el('inc-' + r.id);
     i$.textContent = inc ? money(inc) : (e.vacia ? '—' : money(0));
     i$.style.color = inc ? (esUSD(r.prod) ? 'var(--verde)' : 'var(--naranja)') : '#BBB';
@@ -588,12 +595,13 @@ function recalc(){
   el('bypro').innerHTML = Object.keys(PRODUCTOS).map(p => {
     const idx = rows.map((r,i) => ({r,e:evals[i]})).filter(x => x.r.prod === p && x.r.prima);
     const u = esUSD(p);
-    const primaTot = idx.reduce((s,x) => s + (u ? x.e.usd : x.e.base), 0);
-    const incTot   = idx.reduce((s,x) => s + (u ? x.e.incMuv : x.e.base * pct), 0);
+    const f = esFijo(p);
+    const primaTot = idx.reduce((s,x) => s + (u ? x.e.usd : x.e.primaCRC), 0);
+    const incTot   = idx.reduce((s,x) => s + (u ? x.e.incMuv : (f ? x.e.incFijo : x.e.base * pct)), 0);
     return `<div class="pcard ${PRODUCTOS[p].cls}">
       <div class="n"><span>${PRODUCTOS[p].ico} ${PRODUCTOS[p].nom}</span> <span class="q">${idx.length} pólizas</span></div>
       <div class="pline">Prima${u ? ' (US$)' : ' acumulada'}<b>${u ? usd(primaTot) : money(primaTot)}</b></div>
-      <div class="pline">Comisión aplicada<b>${u ? '5%' : (pct*100) + '%'}</b></div>
+      <div class="pline">Comisión aplicada<b>${u ? '5%' : (f ? money(PRODUCTOS[p].fijo) + ' c/u' : (pct*100) + '%')}</b></div>
       <div class="pline">Incentivo<b style="color:${u ? 'var(--verde)' : 'var(--naranja)'}">${money(incTot)}</b></div>
     </div>`;
   }).join('');
@@ -609,10 +617,12 @@ function recalc(){
   el('t-foot').textContent = money(gran);
 
   const sumaP = prod => rows.reduce((s,r,i) => s + (r.prod === prod ? evals[i].base : 0), 0);
+  const cntP  = prod => rows.reduce((s,r,i) => s + (r.prod === prod && !evals[i].vacia ? 1 : 0), 0);
   el('t-body').innerHTML = [
     ['👜 Bolso Seguro Total', sumaP('BOLSO')    ? money(sumaP('BOLSO'))    + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('BOLSO')    * pct],
     ['💳 Respaldo tu Saldo',  sumaP('RESPALDO') ? money(sumaP('RESPALDO')) + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('RESPALDO') * pct],
     ['🛡️ Siempre Contigo',    sumaP('SIEMPRE')  ? money(sumaP('SIEMPRE'))  + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('SIEMPRE')  * pct],
+    ['🔐 Respaldo 360',       cntP('RESPALDO360') ? cntP('RESPALDO360') + ' activación(es) × ' + money(PRODUCTOS.RESPALDO360.fijo) : 'Sin ventas', cntP('RESPALDO360') * PRODUCTOS.RESPALDO360.fijo],
     ['✈️ Viajes MUVIT',       usdBase ? usd(usdBase) + ' × 5% · TC BCCR por fecha' : 'Sin ventas', incMuv]
   ].map(([k,b,m]) => `<tr>
       <td style="font-weight:700">${k}</td>
@@ -629,10 +639,12 @@ function exportXLS(){
   const pct   = pctFor(base);
   const incCol = base * pct;
   const incMuv = evals.reduce((s,e) => s + e.incMuv, 0);
+  const incFijo= evals.reduce((s,e) => s + e.incFijo, 0);
   const usdBase= evals.reduce((s,e) => s + e.usd, 0);
 
   const detalle = rows.map((r,i) => ({r, e:evals[i]})).filter(x => x.r.prod && x.r.prima).map(({r,e}) => {
     const u = esUSD(r.prod);
+    const f = esFijo(r.prod);
     return {
       'Asesor': el('asNombre').value || '',
       'Oficina': el('asOficina').value || '',
@@ -646,8 +658,8 @@ function exportXLS(){
       'Prima': Number(r.prima),
       'Tipo de cambio BCCR': u ? e.tc : '',
       'Prima en ₡': Math.round(e.primaCRC),
-      '% Comisión': u ? '5%' : (pct*100) + '%',
-      'Incentivo (₡)': Math.round(u ? e.incMuv : e.base * pct)
+      '% Comisión': u ? '5%' : (f ? money(PRODUCTOS[r.prod].fijo) + ' por activación' : (pct*100) + '%'),
+      'Incentivo (₡)': Math.round(u ? e.incMuv : (f ? e.incFijo : e.base * pct))
     };
   });
 
@@ -658,9 +670,10 @@ function exportXLS(){
     {Concepto:'Prima acumulada en colones', Base:'Bolso + Respaldo + Siempre Contigo', Monto:Math.round(base)},
     {Concepto:'% de incentivo alcanzado', Base:'sobre la prima acumulada', Monto:(pct*100)+'%'},
     {Concepto:'Incentivo coberturas en colones', Base:money(base) + ' x ' + (pct*100) + '%', Monto:Math.round(incCol)},
+    {Concepto:'Incentivo Respaldo 360', Base:money(PRODUCTOS.RESPALDO360.fijo) + ' por activación', Monto:Math.round(incFijo)},
     {Concepto:'Prima Viajes MUVIT (US$)', Base:'', Monto:+usdBase.toFixed(2)},
     {Concepto:'Incentivo Viajes MUVIT', Base:'5% convertido con TC BCCR por fecha', Monto:Math.round(incMuv)},
-    {Concepto:'COMPENSACIÓN TOTAL', Base:'', Monto:Math.round(incCol + incMuv)}
+    {Concepto:'COMPENSACIÓN TOTAL', Base:'', Monto:Math.round(incCol + incMuv + incFijo)}
   ];
 
   const wb = XLSX.utils.book_new();
