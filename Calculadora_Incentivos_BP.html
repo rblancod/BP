@@ -231,6 +231,7 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
       <button class="btn btn-ghost" style="color:#2B2B2B;border-color:#DCDCDC" onclick="addRow(5)">+ 5 filas</button>
     </div>
     <div class="tip mor"><b>Viajes MUVIT:</b> elija el plan y digite <b>la prima total en dólares</b> del producto colocado. El incentivo es el 5% de esa prima, convertido a colones con el tipo de cambio de venta del BCCR del día registrado. No entra en el acumulado de la escala en colones.</div>
+    <div class="tip" style="border-left-color:#0A2463"><b>🔐 Respaldo 360:</b> paga un monto fijo <b>por cada venta</b>, según la cantidad de ventas del producto en el periodo (se aplica a todas): <b>3 ventas → ₡1.000 c/u</b> · <b>4 a 7 → ₡1.500 c/u</b> · <b>8 a 10 → ₡2.000 c/u</b> · <b>11 o más → ₡2.500 c/u</b>. Con menos de 3 ventas no genera comisión. No entra en el acumulado de la escala en colones.</div>
   </div>
 
   <div class="card">
@@ -281,7 +282,12 @@ const PRODUCTOS = {
   BOLSO:    {nom:'Bolso Seguro Total', ico:'👜', mon:'CRC', pct:.5,  cls:'c0'},
   RESPALDO: {nom:'Respaldo tu Saldo',  ico:'💳', mon:'CRC', pct:.5,  cls:'c1'},
   SIEMPRE:  {nom:'Siempre Contigo',    ico:'🛡️', mon:'CRC', pct:.5,  cls:'c2'},
-  RESPALDO360: {nom:'Respaldo 360',    ico:'🔐', mon:'CRC', fijo:1500, cls:'c4'},
+  RESPALDO360: {nom:'Respaldo 360',    ico:'🔐', mon:'CRC', fijo:true, fijoTiers:[
+                 {min:3, max:3,    pago:1000},
+                 {min:4, max:7,    pago:1500},
+                 {min:8, max:10,   pago:2000},
+                 {min:11, max:1e9, pago:2500}
+               ], cls:'c4'},
   TIQUITOS: {nom:'Tiquitos Estudiantil', ico:'🎒', mon:'CRC', pct:.5,  cls:'c5'},
   MUVIT:    {nom:'Viajes MUVIT',       ico:'✈️', mon:'USD', pct:.05, cls:'c3'}
 };
@@ -360,7 +366,11 @@ const usd   = n => '$' + (Number(n)||0).toLocaleString('en-US',{minimumFractionD
 const periodoTxt = () => MESES[+el('mes').value] + ' ' + el('anio').value;
 const pctFor = t => (ESCALA.find(e => t >= e.min && t <= e.max) || ESCALA[0]).pct;
 const esUSD  = p => PRODUCTOS[p] && PRODUCTOS[p].mon === 'USD';
-const esFijo = p => PRODUCTOS[p] && PRODUCTOS[p].fijo > 0;
+const esFijo = p => PRODUCTOS[p] && !!PRODUCTOS[p].fijo;
+/* Pago por venta según la cantidad de ventas del producto (escala por volumen).
+   El pago se aplica a TODAS las ventas del producto en el periodo. */
+const tierPago = (tiers, n) => { const t = (tiers || []).find(t => n >= t.min && n <= t.max); return t ? t.pago : 0; };
+const fijoRateFor = (p, n) => tierPago(PRODUCTOS[p] && PRODUCTOS[p].fijoTiers, n);
 const hoyISO = () => new Date().toISOString().slice(0,10);
 
 /* ========== TIPO DE CAMBIO BCCR (por fecha, con caché) ========== */
@@ -449,8 +459,9 @@ function load(){
 /* ================= LÓGICA ================= */
 /* Cada fila: base = prima en colones que suma a la escala (solo CRC con %).
    MUVIT: incentivo propio = prima US$ × 5% × TC de la fecha.
-   Productos con monto fijo (p.ej. Respaldo 360): pagan un monto fijo por
-   activación, no entran en la escala de prima acumulada. */
+   Productos con pago fijo por venta (p.ej. Respaldo 360): el pago por venta
+   depende de la cantidad de ventas del producto (escala por volumen) y se
+   calcula en recalc/export; no entran en la escala de prima acumulada. */
 function evalRow(r){
   const prima = Number(r.prima) || 0;
   if(!r.prod || !prima) return {vacia:true, base:0, tc:0, primaCRC:0, incMuv:0, incFijo:0, usd:0};
@@ -459,9 +470,20 @@ function evalRow(r){
     return {vacia:false, base:0, tc, primaCRC:prima*tc, incMuv:prima*PRODUCTOS.MUVIT.pct*tc, incFijo:0, usd:prima};
   }
   if(esFijo(r.prod)){
-    return {vacia:false, base:0, tc:0, primaCRC:prima, incMuv:0, incFijo:PRODUCTOS[r.prod].fijo, usd:0};
+    return {vacia:false, base:0, tc:0, primaCRC:prima, incMuv:0, incFijo:0, usd:0};
   }
   return {vacia:false, base:prima, tc:0, primaCRC:prima, incMuv:0, incFijo:0, usd:0};
+}
+/* Asigna a cada fila de producto con pago fijo su pago por venta según el
+   volumen total de ese producto. Devuelve el mapa de tarifas por producto. */
+function aplicaFijos(evals){
+  const rate = {};
+  Object.keys(PRODUCTOS).filter(esFijo).forEach(p => {
+    const n = evals.filter((e,i) => rows[i].prod === p && !e.vacia).length;
+    rate[p] = fijoRateFor(p, n);
+  });
+  evals.forEach((e,i) => { if(esFijo(rows[i].prod) && !e.vacia) e.incFijo = rate[rows[i].prod]; });
+  return rate;
 }
 
 /* ================= FILAS ================= */
@@ -567,6 +589,7 @@ function resetMes(){
 /* ================= RECÁLCULO ================= */
 function recalc(){
   const evals = rows.map(evalRow);
+  const fijoRate = aplicaFijos(evals);
   const base  = evals.reduce((s,e) => s + e.base, 0);
   const pct   = pctFor(base);
   const incCol = base * pct;
@@ -620,7 +643,7 @@ function recalc(){
     return `<div class="pcard ${PRODUCTOS[p].cls}">
       <div class="n"><span>${PRODUCTOS[p].ico} ${PRODUCTOS[p].nom}</span> <span class="q">${idx.length} pólizas</span></div>
       <div class="pline">Prima${u ? ' (US$)' : ' acumulada'}<b>${u ? usd(primaTot) : money(primaTot)}</b></div>
-      <div class="pline">Comisión aplicada<b>${u ? '5%' : (f ? money(PRODUCTOS[p].fijo) + ' c/u' : (pct*100) + '%')}</b></div>
+      <div class="pline">Comisión aplicada<b>${u ? '5%' : (f ? (fijoRate[p] ? money(fijoRate[p]) + ' c/u' : 'Mín. 3 ventas') : (pct*100) + '%')}</b></div>
       <div class="pline">Incentivo<b style="color:${u ? 'var(--verde)' : 'var(--naranja)'}">${money(incTot)}</b></div>
     </div>`;
   }).join('');
@@ -642,7 +665,7 @@ function recalc(){
     ['💳 Respaldo tu Saldo',  sumaP('RESPALDO') ? money(sumaP('RESPALDO')) + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('RESPALDO') * pct],
     ['🛡️ Siempre Contigo',    sumaP('SIEMPRE')  ? money(sumaP('SIEMPRE'))  + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('SIEMPRE')  * pct],
     ['🎒 Tiquitos Estudiantil', sumaP('TIQUITOS') ? money(sumaP('TIQUITOS')) + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('TIQUITOS') * pct],
-    ['🔐 Respaldo 360',       cntP('RESPALDO360') ? cntP('RESPALDO360') + ' activación(es) × ' + money(PRODUCTOS.RESPALDO360.fijo) : 'Sin ventas', cntP('RESPALDO360') * PRODUCTOS.RESPALDO360.fijo],
+    ['🔐 Respaldo 360',       cntP('RESPALDO360') ? cntP('RESPALDO360') + ' venta(s) × ' + (fijoRate.RESPALDO360 ? money(fijoRate.RESPALDO360) : '₡0 (mín. 3 ventas)') : 'Sin ventas', cntP('RESPALDO360') * (fijoRate.RESPALDO360 || 0)],
     ['✈️ Viajes MUVIT',       usdBase ? usd(usdBase) + ' × 5% · TC BCCR por fecha' : 'Sin ventas', incMuv]
   ].map(([k,b,m]) => `<tr>
       <td style="font-weight:700">${k}</td>
@@ -655,6 +678,7 @@ function recalc(){
 /* ================= EXPORTAR ================= */
 function exportXLS(){
   const evals = rows.map(evalRow);
+  const fijoRate = aplicaFijos(evals);
   const base  = evals.reduce((s,e) => s + e.base, 0);
   const pct   = pctFor(base);
   const incCol = base * pct;
@@ -678,7 +702,7 @@ function exportXLS(){
       'Prima': Number(r.prima),
       'Tipo de cambio BCCR': u ? e.tc : '',
       'Prima en ₡': Math.round(e.primaCRC),
-      '% Comisión': u ? '5%' : (f ? money(PRODUCTOS[r.prod].fijo) + ' por activación' : (pct*100) + '%'),
+      '% Comisión': u ? '5%' : (f ? (e.incFijo ? money(e.incFijo) + ' por venta' : '₡0 (mín. 3 ventas)') : (pct*100) + '%'),
       'Incentivo (₡)': Math.round(u ? e.incMuv : (f ? e.incFijo : e.base * pct))
     };
   });
@@ -690,7 +714,7 @@ function exportXLS(){
     {Concepto:'Prima acumulada en colones', Base:"Bolso + Respaldo + Siempre + Tiquitos", Monto:Math.round(base)},
     {Concepto:'% de incentivo alcanzado', Base:'sobre la prima acumulada', Monto:(pct*100)+'%'},
     {Concepto:'Incentivo coberturas en colones', Base:money(base) + ' x ' + (pct*100) + '%', Monto:Math.round(incCol)},
-    {Concepto:'Incentivo Respaldo 360', Base:money(PRODUCTOS.RESPALDO360.fijo) + ' por activación', Monto:Math.round(incFijo)},
+    {Concepto:'Incentivo Respaldo 360', Base:'Pago por venta según volumen (3→₡1.000 · 4-7→₡1.500 · 8-10→₡2.000 · 11+→₡2.500)', Monto:Math.round(incFijo)},
     {Concepto:'Prima Viajes MUVIT (US$)', Base:'', Monto:+usdBase.toFixed(2)},
     {Concepto:'Incentivo Viajes MUVIT', Base:'5% convertido con TC BCCR por fecha', Monto:Math.round(incMuv)},
     {Concepto:'COMPENSACIÓN TOTAL', Base:'', Monto:Math.round(incCol + incMuv + incFijo)}
