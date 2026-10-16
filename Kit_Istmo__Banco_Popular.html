@@ -733,6 +733,21 @@
 
   .intro-products-section { margin-bottom: 22px; }
   .intro-section-title { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 800; color: var(--text-dark); letter-spacing: 1.5px; text-transform: uppercase; text-align: center; margin: 0 0 18px; position: relative; }
+
+  /* ── ACELERADOR ── */
+  .acelerador-section { margin-bottom: 26px; }
+  .acelerador-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+  .acelerador-titlewrap { display: flex; align-items: center; gap: 12px; }
+  .acelerador-badge { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--bp-orange) 0%, #D96710 100%); font-size: 22px; box-shadow: 0 4px 14px rgba(244,121,32,0.35); }
+  .acelerador-title h2 { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; color: var(--bp-orange); line-height: 1.1; margin: 0; }
+  .acelerador-title p { font-size: 12.5px; color: var(--text-mid); margin: 2px 0 0; }
+  .acelerador-reglamento { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: var(--bp-purple); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; text-decoration: none; border-radius: 10px; box-shadow: 0 4px 14px rgba(124,81,161,0.3); transition: background .15s; }
+  .acelerador-reglamento:hover { background: #5A3878; }
+  .acelerador-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .acelerador-card { display: block; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(0,0,0,0.08); transition: transform .15s, box-shadow .15s; }
+  .acelerador-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.15); }
+  .acelerador-card img { width: 100%; height: auto; display: block; }
+  @media (max-width: 560px) { .acelerador-title h2 { font-size: 19px; } .acelerador-grid { grid-template-columns: 1fr; } }
   .intro-section-title::after { content: ''; display: block; width: 48px; height: 3px; background: var(--bp-orange); margin: 10px auto 0; border-radius: 2px; }
 
   .intro-product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; max-width: 1100px; margin: 0 auto; }
@@ -952,6 +967,32 @@
       <div class="intro-hero-text">
         <p>Bienvenido/a a la plataforma de seguros de Banco Popular, respaldada por Internacional de Seguros (Adisa) S.A. Aquí encontrarás toda la información sobre los productos disponibles: coberturas, planes, argumentos de venta y herramientas de acción. Selecciona una cobertura para comenzar.</p>
       </div>
+    </div>
+  </div>
+
+  <div class="acelerador-section">
+    <div class="acelerador-head">
+      <div class="acelerador-titlewrap">
+        <span class="acelerador-badge">🚀</span>
+        <div class="acelerador-title">
+          <h2>Acelerador</h2>
+          <p>Planes de incentivos y promociones vigentes</p>
+        </div>
+      </div>
+      <a href="acelerador/Acelerador_Reglamento_BP.pdf" target="_blank" class="acelerador-reglamento">
+        <span>📄</span> Reglamento
+      </a>
+    </div>
+    <div class="acelerador-grid">
+      <a href="acelerador/acelerador_1_s2_te_premia.webp" target="_blank" class="acelerador-card">
+        <img src="acelerador/acelerador_1_s2_te_premia.webp" alt="S2 te premia — plan de incentivos" loading="lazy">
+      </a>
+      <a href="acelerador/acelerador_2_rifa_puntos.webp" target="_blank" class="acelerador-card">
+        <img src="acelerador/acelerador_2_rifa_puntos.webp" alt="Venda seguros, acumule puntos y participe en la rifa" loading="lazy">
+      </a>
+      <a href="acelerador/acelerador_3_grandes_premios.jpg" target="_blank" class="acelerador-card">
+        <img src="acelerador/acelerador_3_grandes_premios.jpg" alt="Cada venta le acerca a grandes premios" loading="lazy">
+      </a>
     </div>
   </div>
 
