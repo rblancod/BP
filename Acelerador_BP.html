@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acelerador · Planes de Incentivos · Banco Popular</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bp-orange:#F47920; --bp-orange-dark:#D96710; --bp-purple:#7C51A1; --bp-purple-dark:#5A3878;
+    --gray-bg:#F7F8FA; --text-dark:#1A1A2E; --text-mid:#4A4A6A; --border:#E8E8F0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Open Sans',sans-serif;background:var(--gray-bg);color:var(--text-dark);min-height:100vh;}
+  .header{background:linear-gradient(135deg,var(--bp-orange) 0%,var(--bp-orange-dark) 55%,#A8540A 100%);color:#fff;box-shadow:0 4px 20px rgba(244,121,32,0.35);}
+  .header-inner{max-width:1200px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .header-badge{width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+  .header-text h1{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:900;line-height:1.1;letter-spacing:-0.5px;}
+  .header-text p{font-size:13px;opacity:.95;margin-top:2px;}
+  .main{max-width:1200px;margin:0 auto;padding:26px 20px 60px;}
+  .toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
+  .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--bp-orange);font-weight:700;font-size:14px;text-decoration:none;}
+  .back-link:hover{text-decoration:underline;}
+  .reglamento-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--bp-purple);color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;text-decoration:none;border-radius:10px;box-shadow:0 4px 14px rgba(124,81,161,0.3);transition:background .15s;}
+  .reglamento-btn:hover{background:var(--bp-purple-dark);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+  .card{display:block;border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,0.08);transition:transform .15s,box-shadow .15s;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.16);}
+  .card img{width:100%;height:auto;display:block;}
+  @media(max-width:560px){.header-text h1{font-size:20px;}.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <span class="header-badge">🚀</span>
+      <div class="header-text">
+        <h1>Acelerador</h1>
+        <p>Planes de incentivos y promociones vigentes · Popular Seguros</p>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="toolbar">
+      <a href="index.html" class="back-link">← Volver al kit</a>
+      <a href="acelerador/Acelerador_Reglamento_BP.pdf" target="_blank" class="reglamento-btn"><span>📄</span> Reglamento</a>
+    </div>
+    <div class="grid">
+      <a href="acelerador/acelerador_1_s2_te_premia.webp" target="_blank" class="card">
+        <img src="acelerador/acelerador_1_s2_te_premia.webp" alt="S2 te premia — plan de incentivos" loading="lazy">
+      </a>
+      <a href="acelerador/acelerador_2_rifa_puntos.webp" target="_blank" class="card">
+        <img src="acelerador/acelerador_2_rifa_puntos.webp" alt="Venda seguros, acumule puntos y participe en la rifa" loading="lazy">
+      </a>
+      <a href="acelerador/acelerador_3_grandes_premios.jpg" target="_blank" class="card">
+        <img src="acelerador/acelerador_3_grandes_premios.jpg" alt="Cada venta le acerca a grandes premios" loading="lazy">
+      </a>
+    </div>
+  </main>
+</body>
+</html>
