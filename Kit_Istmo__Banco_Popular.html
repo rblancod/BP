@@ -737,11 +737,14 @@
   .intro-section-title::after { content: ''; display: block; width: 48px; height: 3px; background: var(--bp-orange); margin: 10px auto 0; border-radius: 2px; }
 
   /* ── BOLETÍN ── */
-  .boletin-sub { text-align: center; color: var(--text-mid); font-size: 13px; margin: -6px 0 18px; }
-  .boletin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
+  /* ── BOLETÍN ── */
+  .boletin-panel { background: #fff; border-radius: 16px; border: 1px solid var(--border); border-top: 4px solid var(--bp-orange); box-shadow: 0 4px 18px rgba(0,0,0,0.07); padding: 22px 26px 26px; max-width: 1100px; margin: 0 auto 22px; }
+  .boletin-title { display: flex; align-items: center; gap: 10px; font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 800; color: var(--bp-orange); margin: 0 0 4px; }
+  .boletin-sub { color: var(--text-mid); font-size: 13px; margin: 0 0 18px; }
+  .boletin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .boletin-img { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(0,0,0,0.08); cursor: zoom-in; transition: transform .15s, box-shadow .15s; }
   .boletin-img:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.16); }
-  @media (max-width: 860px) { .boletin-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) { .boletin-grid { grid-template-columns: 1fr; } .boletin-title { font-size: 19px; } }
   /* Lightbox */
   .lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; padding: 20px; cursor: zoom-out; }
   .lightbox.open { display: flex; }
@@ -1005,16 +1008,6 @@
     </div>
   </div>
 
-  <div class="intro-products-section boletin-section">
-    <h2 class="intro-section-title">📰 Boletín</h2>
-    <p class="boletin-sub">Planes e incentivos vigentes · toca una imagen para ampliarla · <a href="boletin/Boletin_Reglamento_BP.pdf" target="_blank" style="color:var(--bp-purple);font-weight:700;">📄 Reglamento</a></p>
-    <div class="boletin-grid">
-      <img class="boletin-img" src="boletin/boletin_1_s2_te_premia.webp" alt="S2 te premia — plan de incentivos" loading="lazy" onclick="openLightbox(this)">
-      <img class="boletin-img" src="boletin/boletin_2_rifa_puntos.webp" alt="Venda seguros, acumule puntos y participe en la rifa" loading="lazy" onclick="openLightbox(this)">
-      <img class="boletin-img" src="boletin/boletin_3_grandes_premios.jpg" alt="Cada venta le acerca a grandes premios" loading="lazy" onclick="openLightbox(this)">
-    </div>
-  </div>
-
   <div class="intro-products-section">
     <h2 class="intro-section-title">Herramientas</h2>
     <div class="intro-product-grid">
@@ -1023,6 +1016,16 @@
         <span class="ipc-name">Calculadora de Incentivos</span>
         <span class="ipc-desc">Calcula los incentivos por ventas de seguros</span>
       </a>
+    </div>
+  </div>
+
+  <div class="boletin-panel">
+    <h2 class="boletin-title">📰 Boletín</h2>
+    <p class="boletin-sub">Planes e incentivos vigentes · toca una imagen para ampliarla · <a href="boletin/Boletin_Reglamento_BP.pdf" target="_blank" style="color:var(--bp-purple);font-weight:700;">📄 Reglamento</a></p>
+    <div class="boletin-grid">
+      <img class="boletin-img" src="boletin/boletin_1_s2_te_premia.webp" alt="S2 te premia — plan de incentivos" loading="lazy" onclick="openLightbox(this)">
+      <img class="boletin-img" src="boletin/boletin_2_rifa_puntos.webp" alt="Venda seguros, acumule puntos y participe en la rifa" loading="lazy" onclick="openLightbox(this)">
+      <img class="boletin-img" src="boletin/boletin_3_grandes_premios.jpg" alt="Cada venta le acerca a grandes premios" loading="lazy" onclick="openLightbox(this)">
     </div>
   </div>
 
