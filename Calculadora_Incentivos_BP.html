@@ -186,14 +186,14 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
 <section class="panel on" id="reg">
   <div class="kpis">
     <div class="kpi"><div class="lbl">Pólizas registradas</div><div class="val" id="k-tot">0</div><div class="foot" id="k-mix">0 en colones · 0 MUVIT</div></div>
-    <div class="kpi"><div class="lbl">Prima acumulada (₡)</div><div class="val" id="k-fac">₡0</div><div class="foot">Bolso · Respaldo · Siempre · Tiquitos</div></div>
+    <div class="kpi"><div class="lbl">Prima acumulada (₡)</div><div class="val" id="k-fac">₡0</div><div class="foot">Bolso · Respaldo · Siempre</div></div>
     <div class="kpi nar"><div class="lbl">% de incentivo alcanzado</div><div class="val" id="k-pct">0%</div><div class="foot" id="k-falta">Necesita superar ₡6,000 de prima</div></div>
     <div class="kpi ama"><div class="lbl">Compensación total</div><div class="val" id="k-inc">₡0</div><div class="foot">Coberturas ₡ + MUVIT 5%</div></div>
   </div>
 
   <div class="card">
     <h2>Escala de incentivo</h2>
-    <p class="note">El % aplica sobre la <b>prima acumulada del mes</b> de las tres coberturas en colones. Todas las ventas se pagan siempre que se supere el mínimo de ₡6,000. Viajes MUVIT paga siempre 5% de la prima y se suma aparte.</p>
+    <p class="note">El % aplica sobre la <b>prima acumulada del mes</b> de las coberturas en colones de escala (Bolso, Respaldo tu Saldo y Siempre Contigo), siempre que se supere el mínimo de ₡6,000. Viajes MUVIT (5%), Respaldo 360 y Tiquitos pagan aparte y se suman al total.</p>
     <div class="scale" id="scale"></div>
     <div class="bar"><i id="bar" style="width:0%"></i></div>
     <div class="barnote" id="barnote">Faltan ₡6,001 de prima acumulada para llegar al 50%.</div>
@@ -201,7 +201,7 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
 
   <div class="card">
     <h2>Registro de ventas <span style="font-weight:600;color:var(--card-muted);font-size:.85rem" id="tituloPeriodo"></span></h2>
-    <p class="note">Un solo registro para las cuatro coberturas. Elija producto y plan: la prima se llena sola. Las de <b>Viajes MUVIT</b> se ingresan en dólares y se convierten con el tipo de cambio del BCCR de la fecha de venta.</p>
+    <p class="note">Un solo registro para todas las coberturas. Elija producto y plan: la prima se llena sola. Las de <b>Viajes MUVIT</b> se ingresan en dólares y se convierten con el tipo de cambio del BCCR de la fecha de venta.</p>
     <div class="tblwrap">
       <table>
         <thead><tr>
@@ -231,7 +231,8 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
       <button class="btn btn-ghost" style="color:#2B2B2B;border-color:#DCDCDC" onclick="addRow(5)">+ 5 filas</button>
     </div>
     <div class="tip mor"><b>Viajes MUVIT:</b> elija el plan y digite <b>la prima total en dólares</b> del producto colocado. El incentivo es el 5% de esa prima, convertido a colones con el tipo de cambio de venta del BCCR del día registrado. No entra en el acumulado de la escala en colones.</div>
-    <div class="tip" style="border-left-color:#7C51A1"><b>🔐 Respaldo 360:</b> paga un monto fijo <b>por cada venta</b>, según la cantidad de ventas del producto en el periodo (se aplica a todas): <b>3 ventas → ₡1.000 c/u</b> · <b>4 a 7 → ₡1.500 c/u</b> · <b>8 a 10 → ₡2.000 c/u</b> · <b>11 o más → ₡2.500 c/u</b>. Con menos de 3 ventas no genera comisión. No entra en el acumulado de la escala en colones.</div>
+    <div class="tip" style="border-left-color:#7C51A1"><b>🔐 Respaldo 360:</b> paga un monto fijo <b>por cada venta</b>, según la cantidad de ventas del producto en el periodo (se aplica a todas): <b>3 ventas → ₡1.500 c/u</b> · <b>4 a 7 → ₡1.800 c/u</b> · <b>8 a 15 → ₡2.000 c/u</b> · <b>16 o más → ₡2.500 c/u</b>. Con menos de 3 ventas no genera comisión. No entra en el acumulado de la escala en colones.</div>
+    <div class="tip" style="border-left-color:#F47920"><b>🎒 Tiquitos:</b> paga <b>₡950 fijos por cada venta</b>, sin importar el plan. No entra en el acumulado de la escala en colones.</div>
   </div>
 
   <div class="card">
@@ -245,7 +246,7 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
 <section class="panel" id="tot">
   <div class="kpis">
     <div class="kpi mor"><div class="lbl">Prima acumulada (₡)</div><div class="val" id="t-fac">₡0</div><div class="foot" id="t-pct">0% alcanzado</div></div>
-    <div class="kpi nar"><div class="lbl">Incentivo coberturas ₡</div><div class="val" id="t-col">₡0</div><div class="foot">Bolso · Respaldo · Siempre · Tiquitos</div></div>
+    <div class="kpi nar"><div class="lbl">Incentivo coberturas ₡</div><div class="val" id="t-col">₡0</div><div class="foot">Bolso · Respaldo · Siempre</div></div>
     <div class="kpi ver"><div class="lbl">Incentivo Viajes MUVIT</div><div class="val" id="t-muv">₡0</div><div class="foot" id="t-muvusd">5% de $0.00</div></div>
     <div class="kpi"><div class="lbl">Pólizas totales del mes</div><div class="val" id="t-pol">0</div><div class="foot">Todas las coberturas</div></div>
   </div>
@@ -264,7 +265,7 @@ footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;lin
         <tfoot><tr><td colspan="2" style="text-align:right">TOTAL</td><td class="calc" style="text-align:right;color:var(--naranja)" id="t-foot">₡0</td></tr></tfoot>
       </table>
     </div>
-    <div class="tip"><b>Reglas del plan:</b> ₡0 – ₡6,000 sin comisión · ₡6,001 – ₡50,000 paga 50% sobre la prima acumulada · ₡50,001 en adelante paga 100%. Viajes MUVIT paga 5% de la prima en dólares, convertida a colones con el tipo de cambio del BCCR del día de la venta, y se suma al total.</div>
+    <div class="tip"><b>Reglas del plan:</b> ₡0 – ₡6,000 sin comisión · ₡6,001 – ₡50,000 paga 50% sobre la prima acumulada · ₡50,001 en adelante paga 100% (aplica a Bolso, Respaldo tu Saldo y Siempre Contigo). Viajes MUVIT paga 5% de la prima en dólares (TC BCCR del día). Respaldo 360 paga un monto por venta según volumen y Tiquitos ₡950 por venta. Todo se suma al total.</div>
   </div>
 </section>
 
@@ -283,12 +284,12 @@ const PRODUCTOS = {
   RESPALDO: {nom:'Respaldo tu Saldo',  ico:'💳', mon:'CRC', pct:.5,  cls:'c1'},
   SIEMPRE:  {nom:'Siempre Contigo',    ico:'🛡️', mon:'CRC', pct:.5,  cls:'c2'},
   RESPALDO360: {nom:'Respaldo 360',    ico:'🔐', mon:'CRC', fijo:true, fijoTiers:[
-                 {min:3, max:3,    pago:1000},
-                 {min:4, max:7,    pago:1500},
-                 {min:8, max:10,   pago:2000},
-                 {min:11, max:1e9, pago:2500}
+                 {min:3, max:3,    pago:1500},
+                 {min:4, max:7,    pago:1800},
+                 {min:8, max:15,   pago:2000},
+                 {min:16, max:1e9, pago:2500}
                ], cls:'c4'},
-  TIQUITOS: {nom:'Tiquitos Estudiantil', ico:'🎒', mon:'CRC', pct:.5,  cls:'c5'},
+  TIQUITOS: {nom:'Tiquitos Estudiantil', ico:'🎒', mon:'CRC', fijo:true, fijoTiers:[{min:1, max:1e9, pago:950}], cls:'c5'},
   MUVIT:    {nom:'Viajes MUVIT',       ico:'✈️', mon:'USD', pct:.05, cls:'c3'}
 };
 
@@ -664,7 +665,7 @@ function recalc(){
     ['👜 Bolso Seguro Total', sumaP('BOLSO')    ? money(sumaP('BOLSO'))    + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('BOLSO')    * pct],
     ['💳 Respaldo tu Saldo',  sumaP('RESPALDO') ? money(sumaP('RESPALDO')) + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('RESPALDO') * pct],
     ['🛡️ Siempre Contigo',    sumaP('SIEMPRE')  ? money(sumaP('SIEMPRE'))  + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('SIEMPRE')  * pct],
-    ['🎒 Tiquitos Estudiantil', sumaP('TIQUITOS') ? money(sumaP('TIQUITOS')) + ' × ' + (pct*100) + '%' : 'Sin ventas', sumaP('TIQUITOS') * pct],
+    ['🎒 Tiquitos Estudiantil', cntP('TIQUITOS') ? cntP('TIQUITOS') + ' venta(s) × ' + (fijoRate.TIQUITOS ? money(fijoRate.TIQUITOS) : '₡0') : 'Sin ventas', cntP('TIQUITOS') * (fijoRate.TIQUITOS || 0)],
     ['🔐 Respaldo 360',       cntP('RESPALDO360') ? cntP('RESPALDO360') + ' venta(s) × ' + (fijoRate.RESPALDO360 ? money(fijoRate.RESPALDO360) : '₡0 (mín. 3 ventas)') : 'Sin ventas', cntP('RESPALDO360') * (fijoRate.RESPALDO360 || 0)],
     ['✈️ Viajes MUVIT',       usdBase ? usd(usdBase) + ' × 5% · TC BCCR por fecha' : 'Sin ventas', incMuv]
   ].map(([k,b,m]) => `<tr>
@@ -684,6 +685,8 @@ function exportXLS(){
   const incCol = base * pct;
   const incMuv = evals.reduce((s,e) => s + e.incMuv, 0);
   const incFijo= evals.reduce((s,e) => s + e.incFijo, 0);
+  const incR360= evals.reduce((s,e,i) => s + (rows[i].prod === 'RESPALDO360' ? e.incFijo : 0), 0);
+  const incTiq = evals.reduce((s,e,i) => s + (rows[i].prod === 'TIQUITOS' ? e.incFijo : 0), 0);
   const usdBase= evals.reduce((s,e) => s + e.usd, 0);
 
   const detalle = rows.map((r,i) => ({r, e:evals[i]})).filter(x => x.r.prod && x.r.prima).map(({r,e}) => {
@@ -711,10 +714,11 @@ function exportXLS(){
     {Concepto:'ASESOR', Base:'', Monto:el('asNombre').value || '—'},
     {Concepto:'OFICINA', Base:'', Monto:el('asOficina').value || '—'},
     {Concepto:'PERIODO', Base:'', Monto:periodoTxt()},
-    {Concepto:'Prima acumulada en colones', Base:"Bolso + Respaldo + Siempre + Tiquitos", Monto:Math.round(base)},
+    {Concepto:'Prima acumulada en colones', Base:"Bolso + Respaldo + Siempre", Monto:Math.round(base)},
     {Concepto:'% de incentivo alcanzado', Base:'sobre la prima acumulada', Monto:(pct*100)+'%'},
     {Concepto:'Incentivo coberturas en colones', Base:money(base) + ' x ' + (pct*100) + '%', Monto:Math.round(incCol)},
-    {Concepto:'Incentivo Respaldo 360', Base:'Pago por venta según volumen (3→₡1.000 · 4-7→₡1.500 · 8-10→₡2.000 · 11+→₡2.500)', Monto:Math.round(incFijo)},
+    {Concepto:'Incentivo Respaldo 360', Base:'Pago por venta según volumen (3→₡1.500 · 4-7→₡1.800 · 8-15→₡2.000 · 16+→₡2.500)', Monto:Math.round(incR360)},
+    {Concepto:'Incentivo Tiquitos', Base:'₡950 por venta', Monto:Math.round(incTiq)},
     {Concepto:'Prima Viajes MUVIT (US$)', Base:'', Monto:+usdBase.toFixed(2)},
     {Concepto:'Incentivo Viajes MUVIT', Base:'5% convertido con TC BCCR por fecha', Monto:Math.round(incMuv)},
     {Concepto:'COMPENSACIÓN TOTAL', Base:'', Monto:Math.round(incCol + incMuv + incFijo)}
