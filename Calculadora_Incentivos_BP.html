@@ -610,8 +610,12 @@ function buildRow(r){
 }
 
 function resetMes(){
-  if(!confirm('Se borrarán todas las ventas de ' + periodoTxt() + '.\n\n¿Ya descargó el Excel del mes?')) return;
+  if(!confirm('Se borrarán todas las ventas de ' + periodoTxt() + '.\n\nTambién se limpiarán los datos guardados en la nube.\n\n¿Ya descargó el Excel del mes?')) return;
   try{ localStorage.removeItem(KEY()); }catch(e){}
+  // Clear user data from storage
+  if(currentUser) {
+    try{ localStorage.removeItem(`bp_calc_data_${currentUser}`); }catch(e){}
+  }
   rows = []; uid = 0;
   el('tbody').innerHTML = '';
   addRow(8);
