@@ -610,7 +610,12 @@ function buildRow(r){
 }
 
 function resetMes(){
-  if(!confirm('Se borrarán todas las ventas de ' + periodoTxt() + '.\n\nTambién se limpiarán los datos guardados en la nube.\n\n¿Ya descargó el Excel del mes?')) return;
+  // First, auto-download the Excel
+  exportXLS();
+
+  // Then ask for confirmation
+  if(!confirm('Se descargó el archivo Excel.\n\nAhora se borrarán todas las ventas de ' + periodoTxt() + ' y los datos guardados en la nube.\n\n¿Continuar?')) return;
+
   try{ localStorage.removeItem(KEY()); }catch(e){}
   // Clear user data from storage
   if(currentUser) {
