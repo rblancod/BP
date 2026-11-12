@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Incentivos BP - Prueba con Login</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* LOGIN MODAL */
+    .login-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .login-modal.hidden { display: none; }
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      width: 90%;
+    }
+    .login-box h1 {
+      color: #F47920;
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+    .login-box p {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+    }
+    .login-box label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      font-family: inherit;
+    }
+    .login-box input:focus {
+      outline: none;
+      border-color: #F47920;
+      box-shadow: 0 0 0 3px rgba(244, 121, 32, 0.1);
+    }
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background: #F47920;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .login-box button:hover {
+      background: #d46a18;
+    }
+    .error-msg {
+      color: #d32f2f;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    /* MAIN CONTENT */
+    .container {
+      max-width: 1200px;
+      width: 95%;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #F47920;
+      padding-bottom: 15px;
+    }
+    .header h1 {
+      color: #F47920;
+      font-size: 1.8rem;
+    }
+    .user-info {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .user-email {
+      color: #666;
+      font-weight: 600;
+    }
+    .logout-btn {
+      padding: 8px 16px;
+      background: #f0f0f0;
+      color: #333;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .logout-btn:hover {
+      background: #F47920;
+      color: white;
+      border-color: #F47920;
+    }
+
+    .status-bar {
+      background: #f5f5f5;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .status-bar .save-status {
+      color: #4caf50;
+      font-weight: 600;
+    }
+    .status-bar .save-status.saving {
+      color: #ff9800;
+    }
+
+    /* FORM */
+    .form-section {
+      margin-bottom: 30px;
+    }
+    .form-section h2 {
+      color: #333;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      border-left: 4px solid #F47920;
+      padding-left: 12px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group label {
+      margin-bottom: 6px;
+      color: #333;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .form-group input,
+    .form-group select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #F47920;
+      box-shadow: 0 0 0 3px rgba(244, 121, 32, 0.1);
+    }
+
+    /* RESULTADO */
+    .resultado {
+      background: #f0f8ff;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #F47920;
+      margin-top: 30px;
+    }
+    .resultado h3 {
+      color: #F47920;
+      margin-bottom: 15px;
+    }
+    .resultado-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .resultado-item {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #F47920;
+    }
+    .resultado-item .label {
+      color: #666;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+    .resultado-item .value {
+      color: #F47920;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+      .header { flex-direction: column; gap: 15px; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal" id="loginModal">
+  <div class="login-box">
+    <h1>🔐 Acceso</h1>
+    <p>Ingresa tu correo institucional</p>
+    <div id="errorMsg" class="error-msg" style="display: none;"></div>
+    <label for="emailInput">Correo Institucional:</label>
+    <input
+      type="email"
+      id="emailInput"
+      placeholder="ejemplo@banco-popular.com"
+      autocomplete="email"
+    >
+    <button onclick="handleLogin()">Continuar</button>
+    <p style="margin-top: 15px; font-size: 0.85rem; color: #999;">
+      💡 Usaremos tu correo para guardar tus datos automáticamente
+    </p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="container" id="appContainer" style="display: none;">
+  <div class="header">
+    <h1>📊 Calculadora de Incentivos BP</h1>
+    <div class="user-info">
+      <span class="user-email" id="userEmailDisplay"></span>
+      <button class="logout-btn" onclick="handleLogout()">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <span>Prueba de persistencia con correo</span>
+    <span class="save-status" id="saveStatus">✓ Listo</span>
+  </div>
+
+  <!-- DATOS DEL ASESOR -->
+  <div class="form-section">
+    <h2>👤 Información del Asesor</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Nombre del Asesor</label>
+        <input type="text" id="asesorNombre" placeholder="Ej: Juan Pérez" onchange="autoSave()">
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" id="asesorTel" placeholder="Ej: 87654321" onchange="autoSave()">
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS DEL CLIENTE -->
+  <div class="form-section">
+    <h2>👥 Información del Cliente</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" id="clienteNombre" placeholder="Ej: María García" onchange="autoSave()">
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" id="clienteTel" placeholder="Ej: 87654321" onchange="autoSave()">
+      </div>
+      <div class="form-group">
+        <label>Edad</label>
+        <input type="number" id="clienteEdad" placeholder="Ej: 35" min="0" max="120" onchange="autoSave()">
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTOS Y MONTOS -->
+  <div class="form-section">
+    <h2>💰 Productos y Montos</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Producto</label>
+        <select id="producto" onchange="autoSave()">
+          <option value="">-- Selecciona un producto --</option>
+          <option value="bolso">Bolso Protegido</option>
+          <option value="multisaldo">BP Multisaldo</option>
+          <option value="siempre">BP Siempre Contigo</option>
+          <option value="respaldo360">Protección 360</option>
+          <option value="tiquitos">Seguro Tiquitos BP</option>
+          <option value="muvit">MUVIT</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Monto de Venta (₡)</label>
+        <input type="number" id="monto" placeholder="Ej: 50000" min="0" onchange="autoSave(); calcularComision()">
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="resultado">
+    <h3>📈 Resultado</h3>
+    <div class="resultado-grid">
+      <div class="resultado-item">
+        <div class="label">Monto Ingresado</div>
+        <div class="value" id="montoResultado">₡0</div>
+      </div>
+      <div class="resultado-item">
+        <div class="label">Producto</div>
+        <div class="value" id="productoResultado">-</div>
+      </div>
+      <div class="resultado-item">
+        <div class="label">Estado</div>
+        <div class="value" id="estadoResultado">Listo</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top: 30px; color: #999; font-size: 0.85rem; text-align: center;">
+    ✓ Los datos se guardan automáticamente conforme ingresas información
+  </p>
+</div>
+
+<script>
+  // CONSTANTS
+  const SHEET_API = 'https://script.google.com/macros/d/{SCRIPT_ID}/usercontent'; // Placeholder
+
+  // STATE
+  let currentUser = null;
+  let userData = {};
+
+  // LOAD USER FROM STORAGE
+  function loadUserSession() {
+    const stored = localStorage.getItem('bp_login_email');
+    if (stored) {
+      currentUser = stored;
+      loadUserData();
+      showApp();
+    } else {
+      showLoginModal();
+    }
+  }
+
+  // HANDLE LOGIN
+  function handleLogin() {
+    const email = document.getElementById('emailInput').value.trim();
+
+    if (!email) {
+      showError('Por favor ingresa un correo');
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      showError('Por favor ingresa un correo válido');
+      return;
+    }
+
+    currentUser = email;
+    localStorage.setItem('bp_login_email', email);
+    loadUserData();
+    showApp();
+  }
+
+  // VALIDATE EMAIL
+  function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  // SHOW ERROR
+  function showError(msg) {
+    const errorDiv = document.getElementById('errorMsg');
+    errorDiv.textContent = msg;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+      errorDiv.style.display = 'none';
+    }, 4000);
+  }
+
+  // SHOW LOGIN MODAL
+  function showLoginModal() {
+    document.getElementById('loginModal').classList.remove('hidden');
+    document.getElementById('appContainer').style.display = 'none';
+    document.getElementById('emailInput').focus();
+  }
+
+  // SHOW APP
+  function showApp() {
+    document.getElementById('loginModal').classList.add('hidden');
+    document.getElementById('appContainer').style.display = 'block';
+    document.getElementById('userEmailDisplay').textContent = `📧 ${currentUser}`;
+    loadUserDataToForm();
+  }
+
+  // LOAD USER DATA FROM STORAGE
+  function loadUserData() {
+    const stored = localStorage.getItem(`bp_user_data_${currentUser}`);
+    if (stored) {
+      try {
+        userData = JSON.parse(stored);
+      } catch (e) {
+        userData = {};
+      }
+    } else {
+      userData = {};
+    }
+  }
+
+  // LOAD DATA TO FORM
+  function loadUserDataToForm() {
+    document.getElementById('asesorNombre').value = userData.asesorNombre || '';
+    document.getElementById('asesorTel').value = userData.asesorTel || '';
+    document.getElementById('clienteNombre').value = userData.clienteNombre || '';
+    document.getElementById('clienteTel').value = userData.clienteTel || '';
+    document.getElementById('clienteEdad').value = userData.clienteEdad || '';
+    document.getElementById('producto').value = userData.producto || '';
+    document.getElementById('monto').value = userData.monto || '';
+  }
+
+  // AUTO SAVE
+  function autoSave() {
+    userData = {
+      asesorNombre: document.getElementById('asesorNombre').value,
+      asesorTel: document.getElementById('asesorTel').value,
+      clienteNombre: document.getElementById('clienteNombre').value,
+      clienteTel: document.getElementById('clienteTel').value,
+      clienteEdad: document.getElementById('clienteEdad').value,
+      producto: document.getElementById('producto').value,
+      monto: document.getElementById('monto').value,
+      savedAt: new Date().toISOString()
+    };
+
+    // SAVE TO LOCALSTORAGE (LOCAL TEST)
+    localStorage.setItem(`bp_user_data_${currentUser}`, JSON.stringify(userData));
+
+    // UPDATE STATUS
+    updateSaveStatus();
+
+    // LATER: SEND TO GOOGLE SHEETS
+    // saveToGoogleSheets();
+  }
+
+  // UPDATE SAVE STATUS
+  function updateSaveStatus() {
+    const statusEl = document.getElementById('saveStatus');
+    statusEl.classList.add('saving');
+    statusEl.textContent = '💾 Guardando...';
+
+    setTimeout(() => {
+      statusEl.classList.remove('saving');
+      statusEl.textContent = '✓ Guardado';
+    }, 500);
+  }
+
+  // CALCULAR COMISION
+  function calcularComision() {
+    const monto = parseFloat(document.getElementById('monto').value) || 0;
+    const producto = document.getElementById('producto').value;
+
+    document.getElementById('montoResultado').textContent = `₡${monto.toLocaleString('es-CR')}`;
+    document.getElementById('productoResultado').textContent = producto || '-';
+  }
+
+  // HANDLE LOGOUT
+  function handleLogout() {
+    if (confirm('¿Cerrar sesión?')) {
+      currentUser = null;
+      userData = {};
+      localStorage.removeItem('bp_login_email');
+      document.getElementById('emailInput').value = '';
+      showLoginModal();
+    }
+  }
+
+  // INIT
+  window.addEventListener('load', loadUserSession);
+</script>
+
+</body>
+</html>
