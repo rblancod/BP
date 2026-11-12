@@ -544,7 +544,6 @@ function buildRow(r){
     </select></td>
     <td><select class="pl empty"></select></td>
     <td><input class="pol" type="text" placeholder="N° de póliza"></td>
-    <td><input class="ced" type="text" placeholder="Cédula"></td>
     <td><input class="fec" type="date"></td>
     <td><input class="pri" type="number" placeholder="0" min="0" step="0.01"></td>
     <td><input class="tcf" type="number" placeholder="—" min="0" step="0.01"></td>
@@ -555,7 +554,6 @@ function buildRow(r){
   const prod  = tr.querySelector('.pr');
   const plan  = tr.querySelector('.pl');
   const pol   = tr.querySelector('.pol');
-  const ced   = tr.querySelector('.ced');
   const fecha = tr.querySelector('.fec');
   const prima = tr.querySelector('.pri');
   const tcf   = tr.querySelector('.tcf');
@@ -563,7 +561,7 @@ function buildRow(r){
   prod.value = r.prod;  prod.classList.toggle('empty', !r.prod);
   plan.innerHTML = planOptions(r.prod, r.plan);
   plan.classList.toggle('empty', !r.plan);
-  pol.value = r.pol; ced.value = r.ced; fecha.value = r.fecha; prima.value = r.prima; tcf.value = r.tc;
+  pol.value = r.pol; fecha.value = r.fecha; prima.value = r.prima; tcf.value = r.tc;
 
   const syncMoneda = () => {
     const u = esUSD(r.prod);
@@ -590,7 +588,6 @@ function buildRow(r){
     recalc();
   };
   pol.oninput   = () => { r.pol   = pol.value; save(); };
-  ced.oninput   = () => { r.ced   = ced.value; save(); };
   fecha.onchange= () => {
     r.fecha = fecha.value;
     if(esUSD(r.prod)){ const t = tcPara(r.fecha); if(t){ tcf.value = t.toFixed(2); r.tc = tcf.value; } }
@@ -738,7 +735,6 @@ function exportXLS(){
       'Producto': PRODUCTOS[r.prod].nom,
       'Plan': (PLANES[r.prod] || []).find(p => p.id === r.plan)?.lbl || '',
       'N° Póliza': r.pol,
-      'Cédula': r.ced,
       'Fecha de venta': r.fecha || '',
       'Moneda': u ? 'USD' : 'CRC',
       'Prima': Number(r.prima),
