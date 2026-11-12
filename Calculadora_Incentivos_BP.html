@@ -136,9 +136,39 @@ tfoot td{padding:12px 10px;background:#FAF7FC;font-weight:800;border-top:2px sol
 .tip.mor{background:#F5EFFA;border-left-color:var(--morado)}
 footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;line-height:1.7}
 @media(max-width:640px){h1{font-size:1.25rem}.kpi .val{font-size:1.35rem}}
+
+/* LOGIN MODAL */
+.login-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:10000}
+.login-modal.hidden{display:none}
+.login-box{background:var(--slate);border:1px solid var(--line);border-radius:16px;padding:32px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.login-box h2{color:var(--naranja);margin-bottom:8px;font-size:1.4rem;font-weight:800}
+.login-box .subtitle{color:var(--muted);margin-bottom:24px;font-size:.9rem}
+.login-box label{display:block;margin-bottom:8px;color:var(--txt);font-weight:700;font-size:.9rem}
+.login-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.06);color:var(--txt);font-family:inherit;font-size:.95rem;margin-bottom:20px}
+.login-box input:focus{outline:none;border-color:var(--naranja);box-shadow:0 0 0 3px rgba(244,121,32,.2)}
+.login-box input::placeholder{color:var(--muted)}
+.login-box button{width:100%;padding:12px;background:var(--naranja);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s}
+.login-box button:hover{filter:brightness(1.1)}
+.login-error{color:#FF6B6B;font-size:.85rem;margin-bottom:15px;display:none}
+.login-error.show{display:block}
+.login-tip{color:var(--muted);font-size:.8rem;margin-top:16px;line-height:1.5}
 </style>
 </head>
 <body>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal" id="loginModal">
+  <div class="login-box">
+    <h2>🔐 Acceso</h2>
+    <p class="subtitle">Ingresa tu correo institucional</p>
+    <div class="login-error" id="loginError"></div>
+    <label for="loginEmail">Correo Institucional:</label>
+    <input type="email" id="loginEmail" placeholder="ejemplo@banco-popular.com" autocomplete="email">
+    <button onclick="handleLoginSubmit()">Continuar</button>
+    <p class="login-tip">💡 Usaremos tu correo para guardar tus datos automáticamente</p>
+  </div>
+</div>
+
 <div class="wrap">
 
 <header>
@@ -791,6 +821,99 @@ loadTCCache();
 pintarTC(tcCache[hoyISO()] || null);
 load();
 fetchTCHoy().then(v => { pintarTC(v); recalc(); });
+
+/* ================= LOGIN & AUTO-SAVE ================= */
+let currentUser = null;
+
+function initLoginSystem() {
+  const stored = localStorage.getItem('bp_calc_user_email');
+  if (stored && isValidEmail(stored)) {
+    currentUser = stored;
+    loadUserData();
+    showApp();
+  } else {
+    showLoginModal();
+  }
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showLoginModal() {
+  document.getElementById('loginModal').classList.remove('hidden');
+}
+
+function showApp() {
+  document.getElementById('loginModal').classList.add('hidden');
+}
+
+function handleLoginSubmit() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const errorEl = document.getElementById('loginError');
+
+  if (!email) {
+    errorEl.textContent = 'Por favor ingresa un correo';
+    errorEl.classList.add('show');
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    errorEl.textContent = 'Por favor ingresa un correo válido';
+    errorEl.classList.add('show');
+    return;
+  }
+
+  currentUser = email;
+  localStorage.setItem('bp_calc_user_email', email);
+  loadUserData();
+  showApp();
+}
+
+function loadUserData() {
+  const stored = localStorage.getItem(`bp_calc_data_${currentUser}`);
+  if (stored) {
+    try {
+      const data = JSON.parse(stored);
+      if (data.asNombre) el('asNombre').value = data.asNombre;
+      if (data.asOficina) el('asOficina').value = data.asOficina;
+      saveAsesor();
+    } catch (e) {
+      console.error('Error loading data:', e);
+    }
+  }
+}
+
+function autoSaveUserData() {
+  if (!currentUser) return;
+  const data = {
+    asNombre: el('asNombre').value,
+    asOficina: el('asOficina').value,
+    savedAt: new Date().toISOString()
+  };
+  localStorage.setItem(`bp_calc_data_${currentUser}`, JSON.stringify(data));
+}
+
+// Override original saveAsesor to include auto-save
+const originalSaveAsesor = window.saveAsesor;
+window.saveAsesor = function() {
+  if (originalSaveAsesor) originalSaveAsesor.call(this);
+  autoSaveUserData();
+};
+
+// Allow logout
+function handleLogout() {
+  if (confirm('¿Cerrar sesión?')) {
+    currentUser = null;
+    localStorage.removeItem('bp_calc_user_email');
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginError').classList.remove('show');
+    showLoginModal();
+  }
+}
+
+// Initialize on load
+initLoginSystem();
 </script>
 </body>
 </html>
